@@ -23,9 +23,9 @@ const initialState: AllCategoriesState = {
     status: 'idle',
 }
 
-export const validateZipcode = createAsyncThunk('allCategories/validateZipcode', async(zipcode: Number) => {
-    const response = await axios.get<ZipcodeResponse>('https://api.zippopotam.us/us/' + zipcode);
-    return response;
+export const validateZipcode = createAsyncThunk('allCategories/validateZipcode', async(zipcode: String) => {
+    const { data } = await axios.get<ZipcodeResponse>('https://api.zippopotam.us/us/' + zipcode);
+    return data;
 })
 
 const allConcertsSlice = createSlice({
@@ -40,17 +40,23 @@ const allConcertsSlice = createSlice({
                 state.status = 'loading';
             })
             .addCase(validateZipcode.fulfilled, (state, action: any) => {
-                if(action.payload?.places){
-                    state.city = action.payload.places["state name"];
-                    state.state = action.payload.places["state abbreviation"];
+                console.log(action.payload.places[0]["state abbreviation"])
+                if(action.payload.places){
+                    state.status = "success";
+                    state.city = action.payload.places[0]["place name"];
+                    state.state = action.payload.places[0]["state abbreviation"];
                 } else {
                     state.status = 'error';
                 }
+            })
+            .addCase(validateZipcode.rejected, (state, action: any) => {
+                state.status = "invalid zipcode"
             })
     }
 })
 
 export const getCity = (state: RootState) => state.allConcerts.city;
 export const getStatus = (state: RootState) => state.allConcerts.status;
+export const getStateAbbr = (state: RootState) => state.allConcerts.state;
 
 export default allConcertsSlice.reducer;

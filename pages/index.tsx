@@ -1,17 +1,20 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
 import { validateZipcode } from '@/redux/slices/allConcertsSlice'
-import { useAppDispatch, useAppSelector } from '@/redux/store'
-import { getCity, getStatus } from '@/redux/slices/allConcertsSlice'
+import { useAppDispatch, useAppSelector, RootState, AppDispatch } from '@/redux/store'
+import { getCity, getStatus, getStateAbbr } from '@/redux/slices/allConcertsSlice'
 import { useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
 export default function Home() {
   const { data: session, status } = useSession({ required: true });
-  const [zipcode, setZipcode] = useState<Number | undefined>(undefined);
+  const [zipcode, setZipcode] = useState<String | undefined>(undefined);
   const city = useAppSelector(getCity);
   const cityStatus = useAppSelector(getStatus);
+  const stateAbbr = useAppSelector(getStateAbbr);
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     (async() => {
@@ -19,6 +22,8 @@ export default function Home() {
       console.log(json);
     })()
   }, [])
+
+  
 
   return (
     <>
@@ -28,8 +33,8 @@ export default function Home() {
       <meta name="viewport" content="width=device-width, initial-scale=1" />
     </Head>
       <p>hello</p>
-      <input value={zipcode as number} onChange={(e) => setZipcode(+e.target.value)} />
-      <p>{city}</p>
+      <input type="text" value={zipcode as string} onChange={(e) => {setZipcode(e.target.value); dispatch(validateZipcode(e.target.value))}} />
+      <p>{city}, {stateAbbr}</p>
       <p>{cityStatus}</p>
     </>
   )
