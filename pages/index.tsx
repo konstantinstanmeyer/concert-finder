@@ -1,15 +1,22 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
+import { validateZipcode } from '@/redux/slices/allConcertsSlice'
+import { useAppDispatch, useAppSelector } from '@/redux/store'
+import { getCity, getStatus } from '@/redux/slices/allConcertsSlice'
+import { useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
 
 export default function Home() {
-  const { data: session, status } = useSession({ required: true })
+  const { data: session, status } = useSession({ required: true });
+  const [zipcode, setZipcode] = useState<Number | undefined>(undefined);
+  const city = useAppSelector(getCity);
+  const cityStatus = useAppSelector(getStatus);
 
   useEffect(() => {
     (async() => {
-      const json = await fetch('/api/mongodb')
-      console.log(json)
+      const json = await fetch('/api/mongodb');
+      console.log(json);
     })()
   }, [])
 
@@ -21,6 +28,9 @@ export default function Home() {
       <meta name="viewport" content="width=device-width, initial-scale=1" />
     </Head>
       <p>hello</p>
+      <input value={zipcode as number} onChange={(e) => setZipcode(+e.target.value)} />
+      <p>{city}</p>
+      <p>{cityStatus}</p>
     </>
   )
 }

@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 import axios from "axios";
 
 export interface AllCategoriesState {
@@ -21,7 +22,6 @@ const initialState: AllCategoriesState = {
     state: "",
     status: 'idle',
 }
-
 
 export const validateZipcode = createAsyncThunk('allCategories/validateZipcode', async(zipcode: Number) => {
     const response = await axios.get<ZipcodeResponse>('https://api.zippopotam.us/us/' + zipcode);
@@ -49,5 +49,8 @@ const allConcertsSlice = createSlice({
             })
     }
 })
+
+export const getCity = (state: RootState) => state.allConcerts.city;
+export const getStatus = (state: RootState) => state.allConcerts.status;
 
 export default allConcertsSlice.reducer;
