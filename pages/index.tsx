@@ -2,6 +2,7 @@ import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
 import { validateZipcode } from '@/redux/slices/allConcertsSlice'
 import { useAppDispatch, useAppSelector, RootState, AppDispatch } from '@/redux/store'
+import { useRouter } from 'next/router'
 import { getCity, getStatus, getStateAbbr } from '@/redux/slices/allConcertsSlice'
 import { useState } from 'react'
 import { useSession } from 'next-auth/react'
@@ -9,21 +10,34 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
 export default function Home() {
-  const { data: session, status } = useSession({ required: true });
-  const [zipcode, setZipcode] = useState<String | undefined>(undefined);
+  const { data: session, status } = useSession();
+  const [zipcode, setZipcode] = useState<String>("");
   const city = useAppSelector(getCity);
   const cityStatus = useAppSelector(getStatus);
   const stateAbbr = useAppSelector(getStateAbbr);
   const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
 
   useEffect(() => {
     (async() => {
-      const json = await fetch('/api/mongodb');
-      console.log(json);
+      if(router.isReady){
+        if(status === 'authenticated'){
+          
+        } else if(status === 'unauthenticated'){
+          router.push('/login')
+        }
+      }
+      // const json = await fetch('/api/mongodb');
+      // console.log(json);
     })()
-  }, [])
+  }, [router.isReady])
 
-  
+  console.log(status)
+
+  function handleZipcodeChange(zipcode: String){
+    setZipcode(zipcode);
+    dispatch(validateZipcode(zipcode));
+  }
 
   return (
     <>
@@ -33,8 +47,8 @@ export default function Home() {
       <meta name="viewport" content="width=device-width, initial-scale=1" />
     </Head>
       <p>hello</p>
-      <input type="text" value={zipcode as string} onChange={(e) => {setZipcode(e.target.value); dispatch(validateZipcode(e.target.value))}} />
-      <p>{city}, {stateAbbr}</p>
+      <input type="text" value={zipcode as string} onChange={(e) => {handleZipcodeChange(e.target.value)}} />
+      {cityStatus === 'success' && zipcode.length === 5 ? <p>{city}, {stateAbbr}</p> : null}
       <p>{cityStatus}</p>
     </>
   )

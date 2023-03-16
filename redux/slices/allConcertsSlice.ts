@@ -20,7 +20,7 @@ interface ZipcodeResponse {
 const initialState: AllCategoriesState = {
     city: "",
     state: "",
-    status: 'idle',
+    status: 'please enter a valid zipcode or city name',
 }
 
 export const validateZipcode = createAsyncThunk('allCategories/validateZipcode', async(zipcode: String) => {
