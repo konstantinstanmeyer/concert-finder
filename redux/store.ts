@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import allConcertsSlice from "./slices/allConcertsSlice";
+import allConcertsSlice from "./slices/allConcerts/allConcertsSlice";
 
 export const store = configureStore({
     reducer: {

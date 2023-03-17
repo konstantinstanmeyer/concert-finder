@@ -1,17 +1,19 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
-import { validateZipcode } from '@/redux/slices/allConcertsSlice'
+import { validateLocation } from '@/redux/slices/allConcerts/allConcertsSlice'
 import { useAppDispatch, useAppSelector, RootState, AppDispatch } from '@/redux/store'
 import { useRouter } from 'next/router'
-import { getCity, getStatus, getStateAbbr } from '@/redux/slices/allConcertsSlice'
+import { getCity, getStatus, getStateAbbr } from '@/redux/slices/allConcerts/allConcertsSlice'
 import { useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import Link from 'next/link'
 
 export default function Home() {
   const { data: session, status } = useSession();
-  const [zipcode, setZipcode] = useState<String>("");
+  const [location, setLocation] = useState<String>("");
+  const [message, setMessage] = useState<String | undefined>("");
   const city = useAppSelector(getCity);
   const cityStatus = useAppSelector(getStatus);
   const stateAbbr = useAppSelector(getStateAbbr);
@@ -32,9 +34,14 @@ export default function Home() {
     })()
   }, [router.isReady])
 
-  async function handleZipcodeChange(zipcode: String){
-      setZipcode(zipcode);
-      dispatch(validateZipcode(zipcode));
+  async function handleLocationChange(l: String){
+    setLocation(l);
+    dispatch(validateLocation(l));
+    if(l.length > 0 && cityStatus !== "success"){
+      setMessage("enter valid location")
+    } else if (l.length > 0 && cityStatus === "success"){
+
+    }
   }
 
   return (
@@ -49,10 +56,11 @@ export default function Home() {
         <input type="text" value={zipcode as string} onChange={(e) => handleZipcodeChange(e.target.value)} />
         {cityStatus === 'success' && zipcode.length === 5 ? <p>{city}, {stateAbbr}</p> : null}
         <p>{cityStatus}</p> */}
-        <input placeholder="search by zipcode or city..." className="zipcode" type="text" value={zipcode as string} onChange={(e) => handleZipcodeChange(e.target.value)} />
-        <button className="search-button">
+        <input placeholder="search by zipcode or city..." className="location" type="text" value={location as string} onChange={(e) => handleLocationChange(e.target.value)} />
+        <Link href={cityStatus === "success" ? "/browse" : {}} className="search-button">
           <img src="/search.png" className="search-image" />
-        </button>
+        </Link>
+        <p className="message-home">{message}</p>
       </div>
     </div>
   )
