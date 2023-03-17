@@ -23,7 +23,7 @@ export const validateLocation = createAsyncThunk('allCategories/validateZipcode'
         const { data } = await axios.get<ZipcodeResponse>('https://api.zippopotam.us/us/' + zipcode);
         return data;
     } else {
-        const { data } = await axios.get<CityResponse>(`https://app.ticketmaster.com/discovery/v2/events.json?city=${zipcode}&apikey=${process.env.NEXT_PUBLIC_API_KEY}`)
+        const { data } = await axios.get<CityResponse>(`/api/concerts/zipcode/${zipcode}`)
         return data;
     }
 })
@@ -42,7 +42,6 @@ const allConcertsSlice = createSlice({
                 state.status = 'loading';
             })
             .addCase(validateLocation.fulfilled, (state, action: any) => {
-                console.log(action.payload)
                 if(action.payload.places){
                     state.status = "success";
                     state.city = action.payload.places[0]["place name"];
@@ -50,7 +49,7 @@ const allConcertsSlice = createSlice({
                 } else if(action.payload?._embedded){
                     state.status = "success";
                     state.count = action.payload._embedded.events.length;
-                    console.log(action.payload._embedded.events.length)
+                    console.log(action.payload._embedded.events.length + "yes")
                 } else {
                     state.status = 'error';
                 }
