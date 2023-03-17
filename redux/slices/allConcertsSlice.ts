@@ -40,7 +40,6 @@ const allConcertsSlice = createSlice({
                 state.status = 'loading';
             })
             .addCase(validateZipcode.fulfilled, (state, action: any) => {
-                console.log(action.payload.places[0]["state abbreviation"])
                 if(action.payload.places){
                     state.status = "success";
                     state.city = action.payload.places[0]["place name"];
