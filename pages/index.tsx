@@ -34,14 +34,19 @@ export default function Home() {
     })()
   }, [router.isReady])
 
+  useEffect(() => {
+    if(cityStatus === "success"){
+      setMessage(`${city}, ${stateAbbr}`)
+    } else if (cityStatus === "loading") {
+      setMessage("enter valid location")
+    } else {
+      setMessage("enter valid location")
+    }
+  }, [cityStatus])
+
   async function handleLocationChange(l: String){
     setLocation(l);
     dispatch(validateLocation(l));
-    if(l.length > 0 && cityStatus !== "success"){
-      setMessage("enter valid location")
-    } else if (l.length > 0 && cityStatus === "success"){
-
-    }
   }
 
   return (
@@ -57,7 +62,7 @@ export default function Home() {
         {cityStatus === 'success' && zipcode.length === 5 ? <p>{city}, {stateAbbr}</p> : null}
         <p>{cityStatus}</p> */}
         <input placeholder="search by zipcode or city..." className="location" type="text" value={location as string} onChange={(e) => handleLocationChange(e.target.value)} />
-        <Link href={cityStatus === "success" ? "/browse" : {}} className="search-button">
+        <Link href={cityStatus === "success" ? `/city/${city}` : {}} className="search-button">
           <img src="/search.png" className="search-image" />
         </Link>
         <p className="message-home">{message}</p>

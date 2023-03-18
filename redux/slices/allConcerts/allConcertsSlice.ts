@@ -49,7 +49,7 @@ const allConcertsSlice = createSlice({
                 } else if(action.payload?._embedded){
                     state.status = "success";
                     state.count = action.payload._embedded.events.length;
-                    console.log(action.payload._embedded.events.length + "yes")
+                    console.log(action.payload._embedded.events.length)
                 } else {
                     state.status = 'error';
                 }
