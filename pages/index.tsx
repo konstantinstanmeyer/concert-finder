@@ -38,7 +38,7 @@ export default function Home() {
     if(cityStatus === "success"){
       setMessage(`${city}, ${stateAbbr}`)
     } else if (cityStatus === "loading") {
-      setMessage("enter valid location")
+      setMessage("loading...")
     } else {
       setMessage("enter valid location")
     }

@@ -23,7 +23,7 @@ export const validateLocation = createAsyncThunk('allCategories/validateZipcode'
         const { data } = await axios.get<ZipcodeResponse>('https://api.zippopotam.us/us/' + zipcode);
         return data;
     } else {
-        const { data } = await axios.get<CityResponse>(`/api/concerts/zipcode/${zipcode}`)
+        const { data } = await axios.get<CityResponse>(`/api/concerts/city-name/${zipcode}`)
         return data;
     }
 })
@@ -46,9 +46,11 @@ const allConcertsSlice = createSlice({
                     state.status = "success";
                     state.city = action.payload.places[0]["place name"];
                     state.state = action.payload.places[0]["state abbreviation"];
-                } else if(action.payload?._embedded){
+                } else if(action.payload?._embedded?.events[0]._embedded.venues[0].state.stateCode){
                     state.status = "success";
                     state.count = action.payload._embedded.events.length;
+                    state.state = action.payload?._embedded?.events[0]._embedded.venues[0].state.stateCode;
+                    state.city = action.payload?._embedded?.events[0]._embedded.venues[0].city.name;
                     console.log(action.payload._embedded.events.length)
                 } else {
                     state.status = 'error';
