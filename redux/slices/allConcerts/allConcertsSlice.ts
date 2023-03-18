@@ -20,7 +20,7 @@ const initialState: AllCategoriesState = {
 
 export const validateLocation = createAsyncThunk('allCategories/validateZipcode', async(zipcode: String) => {
     if(isNumeric(zipcode)){
-        const { data } = await axios.get<ZipcodeResponse>('https://api.zippopotam.us/us/' + zipcode);
+        const { data } = await axios.get<ZipcodeResponse>('/api/concerts/zipcode/' + zipcode);
         return data;
     } else {
         const { data } = await axios.get<CityResponse>(`/api/concerts/city-name/${zipcode}`)
@@ -51,7 +51,6 @@ const allConcertsSlice = createSlice({
                     state.count = action.payload._embedded.events.length;
                     state.state = action.payload?._embedded?.events[0]._embedded.venues[0].state.stateCode;
                     state.city = action.payload?._embedded?.events[0]._embedded.venues[0].city.name;
-                    console.log(action.payload._embedded.events.length)
                 } else {
                     state.status = 'error';
                 }
