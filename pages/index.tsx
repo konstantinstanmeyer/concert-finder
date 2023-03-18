@@ -4,7 +4,7 @@ import { validateLocation } from '@/redux/slices/allConcerts/allConcertsSlice'
 import { useAppDispatch, useAppSelector, RootState, AppDispatch } from '@/redux/store'
 import { useRouter } from 'next/router'
 import { getCity, getStatus, getStateAbbr } from '@/redux/slices/allConcerts/allConcertsSlice'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
@@ -18,6 +18,7 @@ export default function Home() {
   const cityStatus = useAppSelector(getStatus);
   const stateAbbr = useAppSelector(getStateAbbr);
   const dispatch = useDispatch<AppDispatch>();
+  const didType = useRef(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -26,7 +27,7 @@ export default function Home() {
         if(status === 'authenticated'){
 
         } else if(status === 'unauthenticated'){
-          router.push('/login')
+          router.push('/login');
         }
       }
       // const json = await fetch('/api/mongodb');
@@ -36,17 +37,22 @@ export default function Home() {
 
   useEffect(() => {
     if(cityStatus === "success"){
-      setMessage(`${city}, ${stateAbbr}`)
+      setMessage(`${city}, ${stateAbbr}`);
     } else if (cityStatus === "loading") {
-      setMessage("loading...")
-    } else {
-      setMessage("enter valid location")
+      setMessage("loading...");
+    } else if(didType.current && cityStatus === "error"){
+      setMessage("enter valid location");
     }
   }, [cityStatus])
 
   async function handleLocationChange(l: String){
     setLocation(l);
-    dispatch(validateLocation(l));
+    if(l.length > 0){
+      dispatch(validateLocation(l));
+    }
+    if(!didType.current){
+      didType.current = true;
+    }
   }
 
   return (
