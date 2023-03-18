@@ -46,7 +46,7 @@ const allConcertsSlice = createSlice({
                     state.status = "success";
                     state.city = action.payload.places[0]["place name"];
                     state.state = action.payload.places[0]["state abbreviation"];
-                } else if(action.payload?._embedded?.events[0]._embedded.venues[0].state.stateCode){
+                } else if(action.payload?._embedded?.events[0]._embedded.venues[0].state?.stateCode){
                     state.status = "success";
                     state.count = action.payload._embedded.events.length;
                     state.state = action.payload?._embedded?.events[0]._embedded.venues[0].state.stateCode;
