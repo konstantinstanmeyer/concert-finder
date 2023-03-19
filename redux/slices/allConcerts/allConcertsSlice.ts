@@ -8,7 +8,8 @@ export interface AllCategoriesState {
     city: String;
     state: String;
     status: String;
-    count: Number
+    count: Number;
+    hasVisited: boolean;
 }
 
 const initialState: AllCategoriesState = {
@@ -16,6 +17,7 @@ const initialState: AllCategoriesState = {
     state: "",
     status: 'please enter a valid zipcode or city name',
     count: 0,
+    hasVisited: false,
 }
 
 export const validateLocation = createAsyncThunk('allCategories/validateZipcode', async(zipcode: String) => {
@@ -28,13 +30,13 @@ export const validateLocation = createAsyncThunk('allCategories/validateZipcode'
     }
 })
 
-
-
 const allConcertsSlice = createSlice({
     name: "allConcerts",
     initialState: initialState,
     reducers: {
-
+        setHasVisited: (state: AllCategoriesState, action: PayloadAction<boolean>) => {
+            state.hasVisited = action.payload;
+        }
     },
     extraReducers(builder){
         builder
@@ -65,5 +67,8 @@ export const getCity = (state: RootState) => state.allConcerts.city;
 export const getStatus = (state: RootState) => state.allConcerts.status;
 export const getStateAbbr = (state: RootState) => state.allConcerts.state;
 export const getCount = (state: RootState) => state.allConcerts.count;
+export const getHasVisited = (state: RootState) => state.allConcerts.hasVisited;
+
+export const { setHasVisited } = allConcertsSlice.actions;
 
 export default allConcertsSlice.reducer;
