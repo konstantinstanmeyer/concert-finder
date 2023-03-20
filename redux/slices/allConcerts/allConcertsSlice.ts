@@ -4,7 +4,7 @@ import isNumeric from "@/util/isNumeric";
 import { RootState } from "../../store";
 import axios from "axios";
 
-export interface AllCategoriesState {
+export interface AllConcertsState {
     city: String;
     state: String;
     status: String;
@@ -12,7 +12,7 @@ export interface AllCategoriesState {
     hasVisited: boolean;
 }
 
-const initialState: AllCategoriesState = {
+const initialState: AllConcertsState = {
     city: "",
     state: "",
     status: 'please enter a valid zipcode or city name',
@@ -34,7 +34,7 @@ const allConcertsSlice = createSlice({
     name: "allConcerts",
     initialState: initialState,
     reducers: {
-        setHasVisited: (state: AllCategoriesState, action: PayloadAction<boolean>) => {
+        setHasVisited: (state: AllConcertsState, action: PayloadAction<boolean>) => {
             state.hasVisited = action.payload;
         },
     },
@@ -69,6 +69,6 @@ export const getStateAbbr = (state: RootState) => state.allConcerts.state;
 export const getCount = (state: RootState) => state.allConcerts.count;
 export const getHasVisited = (state: RootState) => state.allConcerts.hasVisited;
 
-export const { setHasVisited, setLocation } = allConcertsSlice.actions;
+export const { setHasVisited } = allConcertsSlice.actions;
 
 export default allConcertsSlice.reducer;

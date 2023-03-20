@@ -25,3 +25,7 @@ interface Place {
 export interface ZipcodeResponse {
     places: Array<Place>; 
 }
+
+export interface Concert {
+    
+}
