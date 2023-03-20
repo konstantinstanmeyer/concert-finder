@@ -27,5 +27,14 @@ export interface ZipcodeResponse {
 }
 
 export interface Concert {
-    
+    id: String;
+    name: String;
+    url: String;
+    image: String;
+    artist: String;
+    genres: Array<string>;
+    minPrice: number;
+    maxPrice: number;
+    city: String;
+    state: String;
 }

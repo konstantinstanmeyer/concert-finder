@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ZipcodeResponse, CityResponse } from "./types";
+import { ZipcodeResponse, CityResponse, Concert } from "./types";
 import isNumeric from "@/util/isNumeric";
 import { RootState } from "../../store";
 import axios from "axios";
@@ -10,6 +10,7 @@ export interface AllConcertsState {
     status: String;
     count: Number;
     hasVisited: boolean;
+    concerts: Array<Concert>;
 }
 
 const initialState: AllConcertsState = {
@@ -18,9 +19,10 @@ const initialState: AllConcertsState = {
     status: 'please enter a valid zipcode or city name',
     count: 0,
     hasVisited: false,
+    concerts: []
 }
 
-export const validateLocation = createAsyncThunk('allCategories/validateZipcode', async(zipcode: String) => {
+export const validateLocation = createAsyncThunk('allConcerts/validateZipcode', async(zipcode: String) => {
     if(isNumeric(zipcode)){
         const { data } = await axios.get<ZipcodeResponse>('/api/concerts/zipcode/' + zipcode);
         return data;
@@ -28,6 +30,11 @@ export const validateLocation = createAsyncThunk('allCategories/validateZipcode'
         const { data } = await axios.get<CityResponse>(`/api/concerts/city-name/${zipcode}`)
         return data;
     }
+})
+
+export const fetchConcerts = createAsyncThunk('allConcerts/fetchConcerts', async (cityState: String) => {
+    const { data } = await axios.get('/api/concerts/city-state/' + cityState);
+    return data;
 })
 
 const allConcertsSlice = createSlice({
@@ -57,7 +64,16 @@ const allConcertsSlice = createSlice({
                     state.status = 'error';
                 }
             })
-            .addCase(validateLocation.rejected, (state, action: any) => {
+            .addCase(fetchConcerts.rejected, (state, action: any) => {
+                
+            })
+            .addCase(fetchConcerts.pending, (state, action) => {
+                
+            })
+            .addCase(fetchConcerts.fulfilled, (state, action: any) => {
+                
+            })
+            .addCase(fetchConcerts.rejected, (state, action: any) => {
                 state.status = "invalid zipcode"
             })
     }
