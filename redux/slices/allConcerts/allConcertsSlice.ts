@@ -33,6 +33,7 @@ export const validateLocation = createAsyncThunk('allConcerts/validateZipcode', 
 })
 
 export const fetchConcerts = createAsyncThunk('allConcerts/fetchConcerts', async (cityState: String) => {
+    console.log(cityState)
     const { data } = await axios.get('/api/concerts/city-state/' + cityState);
     return data;
 })
@@ -64,14 +65,11 @@ const allConcertsSlice = createSlice({
                     state.status = 'error';
                 }
             })
-            .addCase(fetchConcerts.rejected, (state, action: any) => {
-                
-            })
             .addCase(fetchConcerts.pending, (state, action) => {
-                
+                state.status = 'loading';
             })
             .addCase(fetchConcerts.fulfilled, (state, action: any) => {
-                
+                console.log(action.payload);
             })
             .addCase(fetchConcerts.rejected, (state, action: any) => {
                 state.status = "invalid zipcode"
@@ -84,6 +82,7 @@ export const getStatus = (state: RootState) => state.allConcerts.status;
 export const getStateAbbr = (state: RootState) => state.allConcerts.state;
 export const getCount = (state: RootState) => state.allConcerts.count;
 export const getHasVisited = (state: RootState) => state.allConcerts.hasVisited;
+export const getConcerts = (state: RootState) => state.allConcerts.concerts;
 
 export const { setHasVisited } = allConcertsSlice.actions;
 
