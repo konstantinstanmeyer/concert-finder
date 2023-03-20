@@ -2,13 +2,14 @@ import Head from 'next/head'
 import { setHasVisited, validateLocation } from '@/redux/slices/allConcerts/allConcertsSlice'
 import { useAppSelector, AppDispatch } from '@/redux/store'
 import { useRouter } from 'next/router'
-import { getCity, getStatus, getStateAbbr, getHasVisited } from '@/redux/slices/allConcerts/allConcertsSlice'
+import { getCity, getStatus, getStateAbbr, getHasVisited, getLocation, setLocation } from '@/redux/slices/allConcerts/allConcertsSlice'
 import { useRef, useState } from 'react'
 import Spinner from '@/components/Spinner'
 import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import Link from 'next/link'
+import isNumeric from '@/util/isNumeric'
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -32,7 +33,7 @@ export default function Home() {
         dispatch(setHasVisited(true));
       }, 1000);
     }, 1000);
-  }, [isLoading])
+  }, [isLoading]);
 
   useEffect(() => {
     (async() => {
@@ -57,16 +58,18 @@ export default function Home() {
         setMessage("loading...");
         break;
       case "error":
-        if(didType.current) setMessage("enter valid location");
+        if(didType.current && isNumeric(location) && location.length !== 5) {
+          setMessage("enter a valid zipcode");
+        } else {
+          setMessage("no results found");
+        }
         break;
     }
   }, [cityStatus])
 
-  async function handleLocationChange(l: String){
+  async function handleLocationChange(l: string){
+    dispatch(validateLocation(l));
     setLocation(l);
-    if(l.length > 0){
-      dispatch(validateLocation(l));
-    }
     if(!didType.current){
       didType.current = true;
     }
