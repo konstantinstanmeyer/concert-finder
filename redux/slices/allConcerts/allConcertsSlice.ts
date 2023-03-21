@@ -22,18 +22,25 @@ const initialState: AllConcertsState = {
     concerts: []
 }
 
+let abortController;
+
 export const validateLocation = createAsyncThunk('allConcerts/validateZipcode', async(zipcode: String) => {
+    abortController = new AbortController();
+    const abortSignal = abortController.signal;
     if(isNumeric(zipcode)){
-        const { data } = await axios.get<ZipcodeResponse>('/api/concerts/zipcode/' + zipcode);
+        const { data } = await axios.get<ZipcodeResponse>('/api/concerts/zipcode/' + zipcode, {
+            signal: abortSignal,
+        });
         return data;
     } else {
-        const { data } = await axios.get<CityResponse>(`/api/concerts/city-name/${zipcode}`)
+        const { data } = await axios.get<CityResponse>(`/api/concerts/city-name/${zipcode}`, {
+            signal: abortSignal
+        })
         return data;
     }
 })
 
 export const fetchConcerts = createAsyncThunk('allConcerts/fetchConcerts', async (cityState: String) => {
-    console.log(cityState)
     const { data } = await axios.get('/api/concerts/city-state/' + cityState);
     return data;
 })
