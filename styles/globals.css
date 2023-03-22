@@ -151,7 +151,7 @@ textarea:focus, input:focus{
     }
 }
 
-.find {
+.find-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -164,7 +164,7 @@ p {
     margin-block-end: 0;
 }
 
-.find-container {
+.find-card {
     height: 20rem;
     min-width:16rem;
     width: auto;
@@ -175,4 +175,51 @@ p {
     border-radius: 4px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
     margin-bottom: 4rem;
+}
+
+.search {
+    margin-left: none;
+    margin-right: 1rem;
+    width: 20rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    font-size: 16px;
+    text-indent: 24px;
+    font-weight: bold;
+    color: rgb(250, 60, 91);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    font-family: 'Mukta';
+    border: none;
+    border-radius: 3px;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+}
+
+.find {
+    min-width: 100vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-magnifier {
+    width: 35px;
+    height: 35px;
+    filter: invert(49%) sepia(47%) saturate(703%) hue-rotate(314deg) brightness(98%) contrast(84%);
+}
+
+.image-container {
+    background-color: pink;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    width: 59px;
+    height: 59px;
 }
