@@ -86,6 +86,10 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       {hasVisited ? null : <Spinner />}
+      <h1 className="name">LiveScene</h1>
+      <Link href="/find">
+        <p>browse</p>
+      </Link>
       <div className="container search-box">
         <input placeholder="search by zipcode or city..." className="location" type="text" value={location as string} onChange={(e) => handleLocationChange(e.target.value)} />
         <Link href={cityStatus === "success" ? `/find/${city}%20${stateAbbr}` : location.length === 0 ? "/find" : {}} className="search-button">
