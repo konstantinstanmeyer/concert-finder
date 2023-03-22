@@ -1,23 +1,32 @@
+import Link from "next/link"
+
 export default function Find(){
     return(
         <div className="find">
             <div className="search-row">
                 <input placeholder="search for events..." className="search" />
-                <div className="image-container">
+                <Link href={true ? "/" : {} } className="image-container">
                     <img src="/magnifier.png" className="search-magnifier" />
-                </div>
+                </Link>
             </div>
             <div className="find-container">
-                <div className="find-card">
-                
-                </div>
-                <div className="find-card">
-
-                </div>
-                <div className="find-card">
-
-                </div>
+                <Link href="/" className="find-card">
+                    <img src="" />
+                    <h2></h2>
+                    <p></p>
+                </Link>
+                <Link href="/" className="find-card">
+                    <img src="/venue.png" />
+                    <h2>Venues</h2>
+                    <p>discover new locations to listen to your favorite artists</p>
+                </Link>
+                <Link href="/" className="find-card">
+                    <img src="/venue.png" />
+                    <h2></h2>
+                    <p></p>
+                </Link>
             </div>
+            <div></div>
         </div>
     )
 }

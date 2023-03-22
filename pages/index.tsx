@@ -88,7 +88,7 @@ export default function Home() {
       {hasVisited ? null : <Spinner />}
       <div className="container search-box">
         <input placeholder="search by zipcode or city..." className="location" type="text" value={location as string} onChange={(e) => handleLocationChange(e.target.value)} />
-        <Link href={cityStatus === "success" ? `/find/${city}%20${stateAbbr}` : {}} className="search-button">
+        <Link href={cityStatus === "success" ? `/find/${city}%20${stateAbbr}` : location.length === 0 ? "/find" : {}} className="search-button">
           <img src="/search.png" className="search-image" />
         </Link>
         <p className="message-home">{message}</p>
