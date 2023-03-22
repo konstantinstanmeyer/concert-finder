@@ -23,6 +23,8 @@ export default function Home() {
   const dispatch = useDispatch<AppDispatch>();
   const didType = useRef(false);
   const router = useRouter();
+  let controller = new AbortController;
+  let abortSignal = controller.signal;
 
   useEffect(() => {
     setTimeout(function() {
@@ -68,6 +70,8 @@ export default function Home() {
   }, [cityStatus])
 
   async function handleLocationChange(l: string){
+    controller.abort();
+    controller = new AbortController;
     dispatch(validateLocation(l));
     setLocation(l);
     if(!didType.current){
