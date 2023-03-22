@@ -19,8 +19,8 @@ export default function FindConcerts(){
     }, [router.isReady])
 
     return(
-        <div className="">
-
+        <div className="find">
+            <p>hello</p>
         </div>
     )
 }

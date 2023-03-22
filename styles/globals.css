@@ -1,11 +1,17 @@
-body {
-    background: url(../public/background.jpg) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    margin:0;
-    padding:0;
+html {
+    position: relative;
+    min-height: 100vh;
+    min-width: 100vw;
+    padding: 0;
+    margin: 0;
+    left: 0;
+}
+
+body {  
+    min-height: 100vh;
+    min-width: 100vw;
+    background-color: #e66964;
+    margin: 0;
 }
 
 .container {
@@ -41,12 +47,24 @@ body {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
+main {
+    margin: 0;
+    padding: 0;
+}
+
 .home {
+    background: url(../public/background.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
     height: 100vh;
     width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0;
+    padding: 0;
 }
 
 textarea:focus, input:focus{
@@ -131,4 +149,18 @@ textarea:focus, input:focus{
     } to {
         transform: rotate(1turn);
     }
+}
+
+.find {
+    min-height: 100vh;
+    min-width: 100vw;
+    display: flex;
+    flex-direction: row;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
 }
