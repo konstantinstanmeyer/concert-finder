@@ -45,6 +45,11 @@ export const fetchConcerts = createAsyncThunk('allConcerts/fetchConcerts', async
     return data;
 })
 
+export const findConcerts = createAsyncThunk('allConcerts/findConcerts', async() => {
+    const { data } = await axios.get('/api');
+    return data;
+})
+
 const allConcertsSlice = createSlice({
     name: "allConcerts",
     initialState: initialState,
@@ -80,6 +85,15 @@ const allConcertsSlice = createSlice({
             })
             .addCase(fetchConcerts.rejected, (state, action: any) => {
                 state.status = "invalid zipcode"
+            })
+            .addCase(findConcerts.pending, (state, action) => {
+                state.status = 'loading';
+            })
+            .addCase(findConcerts.fulfilled, (state, action: any) => {
+                console.log(action.payload);
+            })
+            .addCase(findConcerts.rejected, (state, action: any) => {
+                state.status = "no results"
             })
     }
 })
