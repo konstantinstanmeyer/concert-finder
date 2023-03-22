@@ -10,20 +10,20 @@ export default function Find(){
                 </Link>
             </div>
             <div className="find-container">
-                <Link href="/" className="find-card">
-                    <img src="" />
-                    <h2></h2>
-                    <p></p>
+                <Link href="/find/concerts" className="find-card">
+                    <img src="/live.png" />
+                    <h2>All Concerts</h2>
+                    <p>choose from a vast assortment of live concerts</p>
                 </Link>
-                <Link href="/" className="find-card">
+                <Link href="/find/venues" className="find-card">
                     <img src="/venue.png" />
                     <h2>Venues</h2>
                     <p>discover new locations to listen to your favorite artists</p>
                 </Link>
-                <Link href="/" className="find-card">
-                    <img src="/venue.png" />
-                    <h2></h2>
-                    <p></p>
+                <Link href="/find/artists" className="find-card">
+                    <img src="/artist.png" />
+                    <h2>Find-by-Artist</h2>
+                    <p>enter your favorite artist and find their upcoming events</p>
                 </Link>
             </div>
             <div></div>

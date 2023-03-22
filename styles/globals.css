@@ -211,6 +211,7 @@ p {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    margin-top: 2rem;
 }
 
 .search-magnifier {
