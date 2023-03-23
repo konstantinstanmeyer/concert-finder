@@ -2,7 +2,19 @@ import { useEffect, useState } from "react"
 import { AppDispatch, useAppSelector } from "@/redux/store"
 import { useDispatch } from "react-redux"
 import { getConcerts, fetchConcerts } from "@/redux/slices/allConcerts/allConcertsSlice"    
+import { GetServerSideProps } from "next"
 import { useRouter } from "next/router"
+
+export const getServerSideProps:GetServerSideProps = async(context) => {
+    const { query = {} } = context || {};
+    const { search: city = undefined } = query || {};
+
+    return {
+        props: {
+            yes: 12,
+        }
+    }
+}
 
 export default function FindConcerts(){
     const concerts = useAppSelector(getConcerts);
