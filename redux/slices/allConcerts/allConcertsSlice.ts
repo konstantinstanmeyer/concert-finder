@@ -1,16 +1,17 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ZipcodeResponse, CityResponse, Concert } from "./types";
+import isBlank from "@/util/isBlank";
 import isNumeric from "@/util/isNumeric";
 import { RootState } from "../../store";
 import axios from "axios";
 
 export interface AllConcertsState {
-    city: String;
-    state: String;
-    status: String;
+    city: string;
+    state: string;
+    status: string;
     count: Number;
     hasVisited: boolean;
-    concerts: Array<Concert>;
+    concerts: Array<any>;
 }
 
 const initialState: AllConcertsState = {
@@ -40,9 +41,9 @@ export const validateLocation = createAsyncThunk('allConcerts/validateZipcode', 
     }
 })
 
-export const fetchConcerts = createAsyncThunk('allConcerts/fetchConcerts', async (cityState: String) => {
-    const { data } = await axios.get('/api/concerts/city-state/' + cityState);
-    return data;
+export const fetchConcerts = createAsyncThunk('allConcerts/fetchConcerts', async (searchParams: String) => {
+    const response = await axios.get(process.env.BASE_URL + '/api/concerts/city-state/' + searchParams);
+    return { data: response.data, city: searchParams.split('+')[0], state: searchParams.split('+')[1] };
 })
 
 export const findConcerts = createAsyncThunk('allConcerts/findConcerts', async() => {
@@ -57,6 +58,9 @@ const allConcertsSlice = createSlice({
         setHasVisited: (state: AllConcertsState, action: PayloadAction<boolean>) => {
             state.hasVisited = action.payload;
         },
+        rehydrate: (state: AllConcertsState, action: PayloadAction<any>) => {
+            state.concerts = action.payload;
+        }
     },
     extraReducers(builder){
         builder
@@ -81,10 +85,14 @@ const allConcertsSlice = createSlice({
                 state.status = 'loading';
             })
             .addCase(fetchConcerts.fulfilled, (state, action: any) => {
-                console.log(action.payload);
+                state.concerts = action.payload.data._embedded.events;
+                if(isBlank(state.city) || isBlank(state.state)){
+                    state.city = action.payload.data.city;
+                    state.city = action.payload.data.state;
+                }
             })
             .addCase(fetchConcerts.rejected, (state, action: any) => {
-                state.status = "invalid zipcode"
+                state.status = "invalid zipcode";
             })
             .addCase(findConcerts.pending, (state, action) => {
                 state.status = 'loading';
@@ -105,6 +113,6 @@ export const getCount = (state: RootState) => state.allConcerts.count;
 export const getHasVisited = (state: RootState) => state.allConcerts.hasVisited;
 export const getConcerts = (state: RootState) => state.allConcerts.concerts;
 
-export const { setHasVisited } = allConcertsSlice.actions;
+export const { setHasVisited, rehydrate } = allConcertsSlice.actions;
 
 export default allConcertsSlice.reducer;
