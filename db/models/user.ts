@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema;
 
+// basic use model, keeps track of login information and saved concerts within the same document
 const userSchema = new Schema({
     email: {
         required: true,

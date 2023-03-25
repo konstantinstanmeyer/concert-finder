@@ -1,6 +1,8 @@
 import NextAuth from "next-auth/next"
 import GoogleProvider from "next-auth/providers/google"
 
+// grab credentials for OAuth provider, using built-in next-auth handling
+// .env variables inferred as String type
 export default NextAuth({
     providers: [
         GoogleProvider({
