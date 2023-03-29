@@ -1,8 +1,8 @@
 import Head from 'next/head'
-import { setHasVisited, validateLocation } from '@/redux/slices/allConcerts/allConcertsSlice'
+import { setHasVisited, validateLocation } from '@/redux/slices/allResults/allResultsSlice'
 import { useAppSelector, AppDispatch } from '@/redux/store'
 import { useRouter } from 'next/router'
-import { getCity, getStatus, getStateAbbr, getHasVisited } from '@/redux/slices/allConcerts/allConcertsSlice'
+import { getCity, getStatus, getStateAbbr, getHasVisited } from '@/redux/slices/allResults/allResultsSlice'
 import { useRef, useState } from 'react'
 import Spinner from '@/components/Spinner'
 import { useSession } from 'next-auth/react'
@@ -92,7 +92,7 @@ export default function Home() {
       </Link>
       <div className="container search-box">
         <input placeholder="search by zipcode or city..." className="location" type="text" value={location as string} onChange={(e) => handleLocationChange(e.target.value)} />
-        <Link href={cityStatus === "success" ? `/find/${city}%20${stateAbbr}` : location.length === 0 ? "/find" : {}} className="search-button">
+        <Link href={cityStatus === "success" ? `/find/concerts?location=${city}%20${stateAbbr}` : location.length === 0 ? "/find" : {}} className="search-button">
           <img src="/search.png" className="search-image" />
         </Link>
         <p className="message-home">{message}</p>

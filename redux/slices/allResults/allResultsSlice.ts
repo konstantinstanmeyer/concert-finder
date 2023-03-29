@@ -12,6 +12,7 @@ export interface AllConcertsState {
     count: Number;
     hasVisited: boolean;
     concerts: Array<any>;
+    pageFormat: string;
 }
 
 const initialState: AllConcertsState = {
@@ -20,7 +21,8 @@ const initialState: AllConcertsState = {
     status: 'please enter a valid zipcode or city name',
     count: 0,
     hasVisited: false,
-    concerts: []
+    concerts: [],
+    pageFormat: "default"
 }
 
 let abortController;
