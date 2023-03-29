@@ -43,7 +43,7 @@ export const validateLocation = createAsyncThunk('allConcerts/validateZipcode', 
     }
 })
 
-export const fetchConcerts = createAsyncThunk('allConcerts/fetchConcerts', async (searchParams: String) => {
+export const validateConcertResults = createAsyncThunk('allConcerts/fetchConcerts', async (searchParams: String) => {
     const response = await axios.get(process.env.BASE_URL + '/api/concerts/city-state/' + searchParams);
     return { data: response.data, city: searchParams.split('+')[0], state: searchParams.split('+')[1] };
 })
@@ -83,17 +83,17 @@ const allConcertsSlice = createSlice({
                     state.status = 'error';
                 }
             })
-            .addCase(fetchConcerts.pending, (state, action) => {
+            .addCase(validateConcertResults.pending, (state, action) => {
                 state.status = 'loading';
             })
-            .addCase(fetchConcerts.fulfilled, (state, action: any) => {
+            .addCase(validateConcertResults.fulfilled, (state, action: any) => {
                 state.concerts = action.payload.data?._embedded?.events;
                 if(isBlank(state.city) || isBlank(state.state) && state.concerts){
                     state.city = action.payload.data.city;
                     state.city = action.payload.data.state;
                 }
             })
-            .addCase(fetchConcerts.rejected, (state, action: any) => {
+            .addCase(validateConcertResults.rejected, (state, action: any) => {
                 state.status = "invalid zipcode";
             })
             .addCase(findConcerts.pending, (state, action) => {

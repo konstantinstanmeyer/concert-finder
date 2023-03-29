@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { AppDispatch, useAppSelector, store } from "@/redux/store"
+import { AppDispatch, store } from "@/redux/store"
 import { useDispatch } from "react-redux"
 import { rehydrate, fetchConcerts } from "@/redux/slices/allResults/allResultsSlice"    
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
@@ -22,7 +22,7 @@ export const getServerSideProps:GetServerSideProps = async(context) => {
     
             if(concerts){
                 return {
-                    props: { concerts }
+                    props: { results: concerts, type: "concerts" }
                 }
             } else {
                 return {
@@ -52,30 +52,34 @@ export const getServerSideProps:GetServerSideProps = async(context) => {
         }
     } else {
         return {
-            props: { results: "none", type: "none" }
+            props: { results: "reroute", type: "none" }
         }
     }
 }
 
-export default function FindConcerts({ results, type }: InferGetServerSidePropsType<typeof getServerSideProps>){
+export default function FindConcerts(props: InferGetServerSidePropsType<typeof getServerSideProps>){
     const dispatch = useDispatch<AppDispatch>();
     const router = useRouter();
     const { query = {} } = router || {};
     const { search = undefined } = query || {};
+    const { results, type }  = props;
+
+    console.log(results);
 
     useEffect(() => {
-        if(results === "none") {
+        if(results === "reroute") {
             router.push('/find')
         }
 
         if(results.length < 1 && router.isReady && search){
-            dispatch(rehydrate(results));
-            console.log("rehydrated")
+            dispatch(rehydrate(props));
+            // console.log("rehydrated")
         }
     }, [router.isReady])
 
     return(
         <div className="find">
+            {type}
             <p>hello</p>
         </div>
     )
