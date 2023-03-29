@@ -5,8 +5,8 @@ import resultsSlice, { rehydrate, findResults } from "@/redux/slices/results/res
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import { useRouter } from "next/router"
 
-export const getServerSideProps:GetServerSideProps = async(context) => {
-    const { query = {} } = context || {};
+export const getServerSideProps:GetServerSideProps = async(ctx) => {
+    const { query = {} } = ctx || {};
     const {
         search: type = undefined,
         location = undefined,
@@ -59,10 +59,16 @@ export const getServerSideProps:GetServerSideProps = async(context) => {
         }
     } else if(type === "artists") {
         if(artistId){
-            // await store.dispatch();
+            await store.dispatch(findResults({
+                type: "attractions",
+            }));
         } else {
+            await store.dispatch(findResults({
+                type: "attractions",
+            }));
+            results = store.getState().results.results;
             return {
-                props: { results: [], type: "artists" }
+                props: { results: results, type: "artists" }
             }
         }
     } else {

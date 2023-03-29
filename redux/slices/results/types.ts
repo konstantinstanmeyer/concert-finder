@@ -39,7 +39,7 @@ export interface Concert {
     state: String;
 }
 
-export interface ConcertParams{
+export interface SearchParams{
     concertId?: string,
     page?: string,
     search?: string,
@@ -48,5 +48,5 @@ export interface ConcertParams{
     city?: string,
     stateCode?: string,
     genres?: string,
-    type: string
+    type: string,
 }

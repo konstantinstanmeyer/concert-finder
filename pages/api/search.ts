@@ -1,17 +1,6 @@
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
-
-interface Params {
-    concertId: string,
-    page: string,
-    search: string,
-    size: string,
-    zipcode: string,
-    city: string,
-    stateCode: string,
-    genres: string,
-    type: string
-}
+import { SearchParams } from "@/redux/slices/results/types"
 
 export default async function concertSearch(req: NextApiRequest, res: NextApiResponse){
     // grab the cityName from request query params, handle space in url: e.g. "cityName stateCode"
@@ -25,11 +14,11 @@ export default async function concertSearch(req: NextApiRequest, res: NextApiRes
         stateCode = undefined,
         genres = undefined,
         type,
-    } = req.query as unknown as Params;
+    } = req.query as unknown as SearchParams;
     console.log(type !== "concerts" ? "" : "classificationName=Music&")
-    const response = await axios.get(process.env.API_URL + `${type}.json?${search ? `keyword=${search}&` : ""}${concertId ? `id=${concertId}&` : ""}${zipcode ? `postalCode=${zipcode}&` : ""}${city ? `city=${city}&` : ""}${stateCode ? `stateCode=${stateCode}&` : ""}${genres ? reduceGenres(genres) : ""}${type !== "concerts" ? "classificationName=Music&" : ""}page=${page}&size=${size}&apikey=${process.env.API_KEY}`)
-    console.log("response: ")
-    console.log(response)
+    const response = await axios.get(process.env.API_URL + `${type}.json?${type === "attractions" ? "typeId=KZAyXgnZfZ7v7la&subTypeId=KZFzBErXgnZfZ7vAd7&" : ""}${search ? `keyword=${search}&` : ""}${concertId ? `id=${concertId}&` : ""}${zipcode ? `postalCode=${zipcode}&` : ""}${city ? `city=${city}&` : ""}${stateCode ? `stateCode=${stateCode}&` : ""}${genres ? reduceGenres(genres) : ""}${type !== "concerts" ? "classificationName=Music&" : ""}page=${page}&size=${size}&apikey=${process.env.API_KEY}`)
+    console.log("response: ");
+    console.log(response);
     res.status(200).json(response.data);
 }
 

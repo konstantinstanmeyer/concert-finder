@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ZipcodeResponse, CityResponse, ConcertParams } from "./types";
+import { ZipcodeResponse, CityResponse, SearchParams } from "./types";
 import reduceParams from "@/util/reduceParams";
 import isBlank from "@/util/isBlank";
 import isNumeric from "@/util/isNumeric";
@@ -44,7 +44,7 @@ export const validateLocation = createAsyncThunk('allResults/validateZipcode', a
     }
 })
 
-export const findResults = createAsyncThunk('allResults/findResults', async(params:ConcertParams | null=null) => {
+export const findResults = createAsyncThunk('allResults/findResults', async(params:SearchParams | null=null) => {
     console.log(params);
     const { data } = await axios.get(process.env.BASE_URL + `/api/search${params ? `?${await reduceParams(params)}`: ""}`);
     return { data, type: params?.type };
@@ -89,6 +89,9 @@ const resultsSlice = createSlice({
                     state.status = "success";
                 } else if(action.payload.data?._embedded?.venues) {
                     state.results = action.payload.data._embedded.venues;
+                    state.status = "success";
+                } else if(action.payload.data?._embedded?.attractions){
+                    state.results = action.payload.data._embedded.attractions;
                     state.status = "success";
                 } else {
                     state.status = "no results";
