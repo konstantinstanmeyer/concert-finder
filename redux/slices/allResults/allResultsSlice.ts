@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ZipcodeResponse, CityResponse, Concert } from "./types";
+import { ZipcodeResponse, CityResponse, ConcertParams } from "./types";
 import isBlank from "@/util/isBlank";
 import isNumeric from "@/util/isNumeric";
 import { RootState } from "../../store";
@@ -48,9 +48,9 @@ export const validateConcertResults = createAsyncThunk('allConcerts/fetchConcert
     return { data: response.data, city: searchParams.split('+')[0], state: searchParams.split('+')[1] };
 })
 
-export const findConcerts = createAsyncThunk('allConcerts/findConcerts', async() => {
-    const { data } = await axios.get('/api');
-    return data;
+export const findConcerts = createAsyncThunk('allResults', async(params: ConcertParams) => {
+    const response = await axios.get(process.env.BASE_URL + `/api/concerts${params ? `?${params?.concertId}`: ""}`);
+    
 })
 
 const allConcertsSlice = createSlice({

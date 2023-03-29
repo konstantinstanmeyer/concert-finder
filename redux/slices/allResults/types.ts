@@ -38,3 +38,14 @@ export interface Concert {
     city: String;
     state: String;
 }
+
+export interface ConcertParams{
+    concertId: string,
+    page: string,
+    search: string,
+    size: string,
+    zipcode: string,
+    city: string,
+    stateCode: string,
+    genres: string
+}

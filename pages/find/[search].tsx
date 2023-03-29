@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { AppDispatch, store } from "@/redux/store"
 import { useDispatch } from "react-redux"
-import { rehydrate, fetchConcerts } from "@/redux/slices/allResults/allResultsSlice"    
+import { rehydrate, findConcerts } from "@/redux/slices/allResults/allResultsSlice"    
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import { useRouter } from "next/router"
 
@@ -17,8 +17,8 @@ export const getServerSideProps:GetServerSideProps = async(context) => {
 
     if(type === "concerts"){
         if(location){
-            await store.dispatch(fetchConcerts(`${(location as string).split(' ')[0]}+${(location as string).split(' ')[1]}`));
-            concerts = store.getState().allConcerts.concerts;
+            // await store.dispatch(findConcerts(`${(location as string).split(' ')[0]}+${(location as string).split(' ')[1]}`));
+            // concerts = store.getState().allConcerts.concerts;
     
             if(concerts){
                 return {
