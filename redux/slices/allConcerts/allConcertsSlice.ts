@@ -85,8 +85,8 @@ const allConcertsSlice = createSlice({
                 state.status = 'loading';
             })
             .addCase(fetchConcerts.fulfilled, (state, action: any) => {
-                state.concerts = action.payload.data._embedded.events;
-                if(isBlank(state.city) || isBlank(state.state)){
+                state.concerts = action.payload.data?._embedded?.events;
+                if(isBlank(state.city) || isBlank(state.state) && state.concerts){
                     state.city = action.payload.data.city;
                     state.city = action.payload.data.state;
                 }

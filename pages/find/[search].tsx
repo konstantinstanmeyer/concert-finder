@@ -18,6 +18,10 @@ export const getServerSideProps:GetServerSideProps = async(context) => {
             return {
                 props: { concerts }
             }
+        } else {
+            return {
+                props: { concerts: [] }
+            }
         }
     }
 }
@@ -31,6 +35,7 @@ export default function FindConcerts({ concerts }: InferGetServerSidePropsType<t
     useEffect(() => {
         if(concerts.length < 1 && router.isReady && city){
             dispatch(rehydrate(concerts));
+            console.log("rehydrated")
         }
     }, [router.isReady])
 
