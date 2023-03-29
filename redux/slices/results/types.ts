@@ -40,12 +40,13 @@ export interface Concert {
 }
 
 export interface ConcertParams{
-    concertId: string,
-    page: string,
-    search: string,
-    size: string,
-    zipcode: string,
-    city: string,
-    stateCode: string,
-    genres: string
+    concertId?: string,
+    page?: string,
+    search?: string,
+    size?: string,
+    zipcode?: string,
+    city?: string,
+    stateCode?: string,
+    genres?: string,
+    type: string
 }

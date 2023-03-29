@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import allConcertsSlice from "./slices/allResults/allResultsSlice";
+import resultsSlice from "./slices/results/resultsSlice";
 
 export const store = configureStore({
     reducer: {
-        allConcerts: allConcertsSlice
+        results: resultsSlice
     }
 })
 

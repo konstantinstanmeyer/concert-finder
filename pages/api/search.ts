@@ -9,7 +9,8 @@ interface Params {
     zipcode: string,
     city: string,
     stateCode: string,
-    genres: string
+    genres: string,
+    type: string
 }
 
 export default async function concertSearch(req: NextApiRequest, res: NextApiResponse){
@@ -22,10 +23,14 @@ export default async function concertSearch(req: NextApiRequest, res: NextApiRes
         city = undefined,
         zipcode = undefined,
         stateCode = undefined,
-        genres = undefined
+        genres = undefined,
+        type,
     } = req.query as unknown as Params;
-    const { data } = await axios.get(process.env.BASE_URL + `events.json?${search ? `keyword=${search}&` : ""}${concertId ? `id=${concertId}&` : ""}${zipcode ? `postalCode=${zipcode}&` : ""}${city ? `city=${city}&` : ""}${stateCode ? `stateCode=${stateCode}&` : ""}${genres ? reduceGenres(genres) : ""}classificationName=Music&page=${page}&size=${size}&apikey=${process.env.API_KEY}`)
-    res.status(200).json(data);
+    console.log(type !== "concerts" ? "" : "classificationName=Music&")
+    const response = await axios.get(process.env.API_URL + `${type}.json?${search ? `keyword=${search}&` : ""}${concertId ? `id=${concertId}&` : ""}${zipcode ? `postalCode=${zipcode}&` : ""}${city ? `city=${city}&` : ""}${stateCode ? `stateCode=${stateCode}&` : ""}${genres ? reduceGenres(genres) : ""}${type !== "concerts" ? "classificationName=Music&" : ""}page=${page}&size=${size}&apikey=${process.env.API_KEY}`)
+    console.log("response: ")
+    console.log(response)
+    res.status(200).json(response.data);
 }
 
 export function reduceGenres(genres: string): string{

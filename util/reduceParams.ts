@@ -1,8 +1,11 @@
-import { ConcertParams } from "@/redux/slices/allResults/types";
+import { ConcertParams } from "@/redux/slices/results/types";
 
-export async function reduceParams(params: ConcertParams){
+export default async function reduceParams(params: ConcertParams){
     let result = "";
     for(const key in params){
-        result = result + `${key}=${params[key as keyof ConcertParams]}`
+        if(!params[key as keyof ConcertParams]) null
+        else if(!result.length && params[key as keyof ConcertParams]) result = `${key}=${params[key as keyof ConcertParams]}` + result
+        else result =  `${key}=${params[key as keyof ConcertParams]}&` + result;
     }
+    return result;
 }

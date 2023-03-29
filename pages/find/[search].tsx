@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { AppDispatch, store } from "@/redux/store"
 import { useDispatch } from "react-redux"
-import { rehydrate, findConcerts } from "@/redux/slices/allResults/allResultsSlice"    
+import resultsSlice, { rehydrate, findResults } from "@/redux/slices/results/resultsSlice"    
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import { useRouter } from "next/router"
 
@@ -13,16 +13,21 @@ export const getServerSideProps:GetServerSideProps = async(context) => {
         artist: artistId = undefined,
         venue: venueId = undefined,
     } = query || {};
-    let concerts = {};
+    let results;
 
     if(type === "concerts"){
         if(location){
-            // await store.dispatch(findConcerts(`${(location as string).split(' ')[0]}+${(location as string).split(' ')[1]}`));
-            // concerts = store.getState().allConcerts.concerts;
+            let [city, stateCode] = (location as string).split(" ");
+            await store.dispatch(findResults({
+                city: city,
+                stateCode: stateCode,
+                type: "events"
+            }));
+            results = store.getState().results.results;
     
-            if(concerts){
+            if(results){
                 return {
-                    props: { results: concerts, type: "concerts" }
+                    props: { results: results, type: "concerts" }
                 }
             } else {
                 return {
@@ -30,16 +35,26 @@ export const getServerSideProps:GetServerSideProps = async(context) => {
                 }
             }
         } else {
+            await store.dispatch(findResults({
+                type: "concerts"
+            }));
+            results = store.getState().results.results;
             return {
-                props: { results: [], type: "concerts" }
+                props: { results: results, type: "concerts" }
             }
         }
     } else if(type === "venues") {
         if(venueId){
-            // await store.dispatch();
+            await store.dispatch(findResults({
+                type: "concerts"
+            }));
         } else {
+            await store.dispatch(findResults({
+                type: "venues"
+            }));
+            results = store.getState().results.results;
             return {
-                props: { results: [], type: "venues" }
+                props: { results: results, type: "venues" }
             }
         }
     } else if(type === "artists") {
