@@ -49,4 +49,5 @@ export interface SearchParams{
     stateCode?: string,
     genres?: string,
     type: string,
+    id?: string
 }

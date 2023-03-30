@@ -2,10 +2,10 @@ import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 import { SearchParams } from "@/redux/slices/results/types"
 
-export default async function concertSearch(req: NextApiRequest, res: NextApiResponse){
+export default async function artistSearch(req: NextApiRequest, res: NextApiResponse){
     // grab the cityName from request query params, handle space in url: e.g. "cityName stateCode"
     const {
-        concertId = undefined,
+        artistId = undefined,
         page = 1,
         search = undefined,
         size = req.query.type === "attractions" ? 200 : 20,
@@ -14,10 +14,9 @@ export default async function concertSearch(req: NextApiRequest, res: NextApiRes
         stateCode = undefined,
         genres = undefined,
         type,
-        id = undefined,
-    } = req.query as unknown as SearchParams;
+    } = req.query as unknown as any;
     console.log(type !== "concerts" ? "" : "classificationName=Music&")
-    const response = await axios.get(process.env.API_URL + `${type}${id ? `/${id}` : ""}.json?${type === "attractions" ? "typeId=KZAyXgnZfZ7v7la&subTypeId=KZFzBErXgnZfZ7vAd7&" : ""}${search ? `keyword=${search}&` : ""}${concertId ? `id=${concertId}&` : ""}${zipcode ? `postalCode=${zipcode}&` : ""}${city ? `city=${city}&` : ""}${stateCode ? `stateCode=${stateCode}&` : ""}${genres ? reduceGenres(genres) : ""}${type !== "concerts" ? "classificationName=Music&" : ""}page=${page}&size=${size}&apikey=${process.env.API_KEY}`)
+    const response = await axios.get(process.env.API_URL + `${type}.json?${type === "attractions" ? "typeId=KZAyXgnZfZ7v7la&subTypeId=KZFzBErXgnZfZ7vAd7&" : ""}${search ? `keyword=${search}&` : ""}${concertId ? `id=${concertId}&` : ""}${zipcode ? `postalCode=${zipcode}&` : ""}${city ? `city=${city}&` : ""}${stateCode ? `stateCode=${stateCode}&` : ""}${genres ? reduceGenres(genres) : ""}${type !== "concerts" ? "classificationName=Music&" : ""}page=${page}&size=${size}&apikey=${process.env.API_KEY}`)
     console.log("response: ");
     console.log(response);
     res.status(200).json(response.data);

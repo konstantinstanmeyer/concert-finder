@@ -64,7 +64,7 @@ export const getServerSideProps:GetServerSideProps = async(ctx) => {
             }));
         } else {
             await store.dispatch(findResults({
-                type: "attractions",
+                type: "events",
             }));
             results = store.getState().results.results;
             return {
