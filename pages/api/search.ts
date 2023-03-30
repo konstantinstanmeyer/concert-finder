@@ -16,10 +16,7 @@ export default async function concertSearch(req: NextApiRequest, res: NextApiRes
         type,
         id = undefined,
     } = req.query as unknown as SearchParams;
-    console.log(type !== "concerts" ? "" : "classificationName=Music&")
     const response = await axios.get(process.env.API_URL + `${type}${id ? `/${id}` : ""}.json?${type === "attractions" ? "typeId=KZAyXgnZfZ7v7la&subTypeId=KZFzBErXgnZfZ7vAd7&" : ""}${search ? `keyword=${search}&` : ""}${concertId ? `id=${concertId}&` : ""}${zipcode ? `postalCode=${zipcode}&` : ""}${city ? `city=${city}&` : ""}${stateCode ? `stateCode=${stateCode}&` : ""}${genres ? reduceGenres(genres) : ""}${type !== "concerts" ? "classificationName=Music&" : ""}page=${page}&size=${size}&apikey=${process.env.API_KEY}`)
-    console.log("response: ");
-    console.log(response);
     res.status(200).json(response.data);
 }
 

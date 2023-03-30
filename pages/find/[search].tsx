@@ -60,11 +60,12 @@ export const getServerSideProps:GetServerSideProps = async(ctx) => {
     } else if(type === "artists") {
         if(artistId){
             await store.dispatch(findResults({
-                type: "events",
+                type: "artists",
             }));
         } else {
             await store.dispatch(findResults({
-                type: "events",
+                type: "artists",
+                search: "flaming lips"
             }));
             results = store.getState().results.results;
             return {

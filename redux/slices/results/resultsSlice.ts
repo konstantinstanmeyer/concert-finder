@@ -45,9 +45,15 @@ export const validateLocation = createAsyncThunk('allResults/validateZipcode', a
 })
 
 export const findResults = createAsyncThunk('allResults/findResults', async(params:SearchParams | null=null) => {
-    console.log(params);
-    const { data } = await axios.get(process.env.BASE_URL + `/api/search${params ? `?${await reduceParams(params)}`: ""}`);
-    return { data, type: params?.type };
+    if(params?.type === "artists"){
+        let type = params.type;
+        params.type = "events";
+        const { data } = await axios.get(process.env.BASE_URL + `/api/artist${params ? `?${await reduceParams(params)}`: ""}`);
+        return { data, type: type };
+    } else {
+        const { data } = await axios.get(process.env.BASE_URL + `/api/search${params ? `?${await reduceParams(params)}`: ""}`);
+        return { data, type: params?.type };
+    }
 })
 
 const resultsSlice = createSlice({
