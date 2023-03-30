@@ -60,7 +60,7 @@ export const getServerSideProps:GetServerSideProps = async(ctx) => {
     } else if(type === "artists") {
         if(artistId){
             await store.dispatch(findResults({
-                type: "attractions",
+                type: "events",
             }));
         } else {
             await store.dispatch(findResults({

@@ -84,7 +84,7 @@ const resultsSlice = createSlice({
                 state.status = 'loading';
             })
             .addCase(findResults.fulfilled, (state, action: any) => {
-                if (action.payload?._embedded?.events){
+                if (action.payload.data?._embedded?.events){
                     state.results = action.payload.data._embedded.events;
                     state.status = "success";
                 } else if(action.payload.data?._embedded?.venues) {

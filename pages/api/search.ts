@@ -8,7 +8,7 @@ export default async function concertSearch(req: NextApiRequest, res: NextApiRes
         concertId = undefined,
         page = 1,
         search = undefined,
-        size = 20,
+        size = req.query.type === "attractions" ? 200 : 20,
         city = undefined,
         zipcode = undefined,
         stateCode = undefined,
