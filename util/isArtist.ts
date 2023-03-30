@@ -10,25 +10,26 @@ interface Image {
 // the only parameteter to 
 // then, we can grab the artist's ID value, and pass it to the concert query, passing an artist ID in the parameters
 // functions to receive events, filter for 
-export default function validateArtist(events: any){
-    const results = events._embedded.events.map((event: any) => {
-        return event._embedded.attractions.filter((attraction: any) => attraction.name === "The Flaming Lips").map((artist: any) => {
-            return {
-                id: event.id,
-                name: event.name,
-                image: event.images.find(isImage).url,
-                venue: {
-                    name: event._embedded.venues[0].name,
-                    location: event._embedded.venues[0].city.name + event._embedded.venues[0].state.stateCode,
-                },
-                artist: {
-                    id: artist.id,
-                    name: artist.name,
-                    image: artist.images.find(isImage).url,
-                },
-            };
+export default function validateArtist(events: any, artistsName?: string){
+    let results: any = [];
+        events._embedded.events.map((event: any) => {
+            event._embedded.attractions.filter((attraction: any) => attraction.name.toLowerCase().includes(artistsName?.toLowerCase())).map((artist: any) => {
+                results = [...results, {
+                    id: event.id,
+                    name: event.name,
+                    image: event.images.find(isImage).url,
+                    venue: {
+                        name: event._embedded.venues[0].name,
+                        location: event._embedded.venues[0].city.name + " " + event._embedded.venues[0].state.stateCode,
+                    },
+                    artist: {
+                        id: artist.id,
+                        name: artist.name,
+                        image: artist.images.find(isImage).url,
+                    },
+                }]
+            })
         })
-    })
     return results;
 }
 

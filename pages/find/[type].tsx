@@ -8,75 +8,53 @@ import { useRouter } from "next/router"
 export const getServerSideProps:GetServerSideProps = async(ctx) => {
     const { query = {} } = ctx || {};
     const {
-        search: type = undefined,
+        type = undefined,
         location = undefined,
         artist: artistId = undefined,
         venue: venueId = undefined,
+        search = undefined
     } = query || {};
     let results;
 
-    if(type === "concerts"){
-        if(location){
-            let [city, stateCode] = (location as string).split(" ");
+    switch(type){
+        case "concerts":
             await store.dispatch(findResults({
-                city: city,
-                stateCode: stateCode,
+                ...(location && { city: (location as string).split(' ')[0]}),
+                ...(location && { stateCode: (location as string).split(' ')[1]}),
                 type: "events"
-            }));
-            results = store.getState().results.results;
-    
-            if(results){
-                return {
-                    props: { results: results, type: "concerts" }
-                }
-            } else {
-                return {
-                    props: { results: [], type: "concerts" }
-                }
-            }
-        } else {
-            await store.dispatch(findResults({
-                type: "concerts"
-            }));
+            }))
             results = store.getState().results.results;
             return {
-                props: { results: results, type: "concerts" }
+                props: { results: results, type: "events" }
             }
-        }
-    } else if(type === "venues") {
-        if(venueId){
+            break;
+        case "venues":
             await store.dispatch(findResults({
-                type: "concerts"
-            }));
-        } else {
-            await store.dispatch(findResults({
-                type: "venues"
+                type: "venues",
+                ...(venueId && { id: venueId as string })
             }));
             results = store.getState().results.results;
             return {
                 props: { results: results, type: "venues" }
             }
-        }
-    } else if(type === "artists") {
-        if(artistId){
+            break;
+        case "artists":
             await store.dispatch(findResults({
-                type: "artists",
-            }));
-        } else {
-            await store.dispatch(findResults({
-                type: "artists",
-                search: "flaming lips"
+                type: "attractions",
+                ...(search && { search: search as string })
             }));
             results = store.getState().results.results;
             return {
                 props: { results: results, type: "artists" }
             }
-        }
-    } else {
-        return {
-            props: { results: "reroute", type: "none" }
-        }
+            break;
+        default:
+            return {
+                props: { results: "reroute", type: "none" }
+            }
     }
+
+    
 }
 
 export default function FindConcerts(props: InferGetServerSidePropsType<typeof getServerSideProps>){

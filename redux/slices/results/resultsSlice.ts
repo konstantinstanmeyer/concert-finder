@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ZipcodeResponse, CityResponse, SearchParams } from "./types";
 import reduceParams from "@/util/reduceParams";
-import isBlank from "@/util/isBlank";
+import isArtist from "@/util/isArtist"
 import isNumeric from "@/util/isNumeric";
 import { RootState } from "../../store";
 import axios from "axios";
@@ -45,11 +45,11 @@ export const validateLocation = createAsyncThunk('allResults/validateZipcode', a
 })
 
 export const findResults = createAsyncThunk('allResults/findResults', async(params:SearchParams | null=null) => {
-    if(params?.type === "artists"){
+    if(params?.type === "attractions" && params?.search){
         let type = params.type;
         params.type = "events";
         const { data } = await axios.get(process.env.BASE_URL + `/api/artist${params ? `?${await reduceParams(params)}`: ""}`);
-        return { data, type: type };
+        return { data, type: type, search: params?.search };
     } else {
         const { data } = await axios.get(process.env.BASE_URL + `/api/search${params ? `?${await reduceParams(params)}`: ""}`);
         return { data, type: params?.type };
@@ -90,17 +90,35 @@ const resultsSlice = createSlice({
                 state.status = 'loading';
             })
             .addCase(findResults.fulfilled, (state, action: any) => {
-                if (action.payload.data?._embedded?.events){
-                    state.results = action.payload.data._embedded.events;
-                    state.status = "success";
-                } else if(action.payload.data?._embedded?.venues) {
-                    state.results = action.payload.data._embedded.venues;
-                    state.status = "success";
-                } else if(action.payload.data?._embedded?.attractions){
-                    state.results = action.payload.data._embedded.attractions;
-                    state.status = "success";
-                } else {
-                    state.status = "no results";
+                const { data, type, search } = action.payload;
+                console.log("type: " + type)
+                switch(type){
+                    case "events":
+                        if (data?._embedded?.events){
+                            state.results = data._embedded.events;
+                            state.status = "success";
+                        }
+                        break;
+                    case "venues":
+                        if(data?._embedded?.venues) {
+                            state.results = data._embedded.venues;
+                            state.status = "success";
+                        }
+                        break;
+                    case "attractions":
+                        // console.log(data)
+                        // console.log("uesesses")
+                        if(data && search) {
+                            // console.log(isArtist(data, search))
+                            state.results = data
+                            state.status = "success";
+                        } else if(data?._embedded?.attractions) {
+                            state.results = data?._embedded?.attractions
+                            state.status = "success";
+                        }
+                        break;
+                    default:
+                        state.status = "no results";
                 }
             })
             .addCase(findResults.rejected, (state, action: any) => {
