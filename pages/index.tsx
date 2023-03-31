@@ -79,7 +79,7 @@ export default function Home() {
   }
 
   return (
-    <div className="home">
+    <div onClick={() => document.querySelector(".sidebar")?.classList.remove("visible")} className="home">
       <div className="top">
         <Head>
           <title>LiveScene</title>
@@ -87,7 +87,6 @@ export default function Home() {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
         {hasVisited ? null : <Spinner />}
-        <h1 className="name">LiveScene</h1>
         <Link className="browse-container" href="/find">
           <p className="browse">browse all</p>
         </Link>
