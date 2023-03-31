@@ -10,7 +10,7 @@ html {
 body {  
     min-height: 100vh;
     min-width: 100vw;
-    background-color: #e66964;
+    background-color: rgb(255, 255, 255);
     margin: 0;
 }
 
@@ -21,12 +21,12 @@ body {
 }
 
 .search-box{
-    width: 24rem;
+    width: 32rem;
     height: 5rem;
     margin-left: auto;
     margin-right: auto;
-    border-radius: 9999px;
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     position: relative;
@@ -53,7 +53,12 @@ main {
 }
 
 .home {
-    background: url(../public/background.jpg) no-repeat center center fixed; 
+    display: flex;
+    flex-direction: column;
+}
+
+.top {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/stage.jpg) no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -73,8 +78,7 @@ textarea:focus, input:focus{
 }
 
 .search-button {
-    position: absolute;
-    width: 3rem;
+    width: 9rem;
     right: 1.2rem;
     border-radius: 9999px;
     padding:0;
@@ -87,6 +91,7 @@ textarea:focus, input:focus{
     justify-content: center;
     align-items: center;
     transition: 0.3s;
+    text-decoration: none;
 }
 
 ::placeholder {
@@ -205,7 +210,7 @@ p {
     min-width: 100vw;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
 }
 
 .search-row {
@@ -259,25 +264,11 @@ p {
 }
 
 .name {
-        font-family: verdana;
-        margin: 0;
-        font-size: 5em;
-        font-weight: 700;
-        color: #f5f5f5;
-        text-shadow: 1px 1px 1px #919191,
-            1px 2px 1px #919191,
-            1px 3px 1px #919191,
-            1px 4px 1px #919191,
-            1px 5px 1px #919191,
-            1px 6px 1px #919191,
-            1px 7px 1px #919191,
-            1px 8px 1px #919191,
-            1px 9px 1px #919191,
-            1px 10px 1px #919191,
-        1px 18px 6px rgba(16,16,16,0.4),
-        1px 22px 10px rgba(16,16,16,0.2),
-        1px 25px 35px rgba(16,16,16,0.2),
-        1px 30px 60px rgba(16,16,16,0.4);
+    font-family: verdana;
+    margin: 0;
+    font-size: 5em;
+    font-weight: 700;
+    color: #f5f5f5;
 }
 
 .browse-container {
@@ -302,5 +293,20 @@ p {
 .concert-card {
     height: 10rem;
     width: 60%;
-    background-color: red;
+    background-color: #F0EAD6;
+}
+
+.find-shows {
+    text-decoration: none;
+    color: black;
+}
+
+.navbar {
+    position: fixed;
+    height: 4rem;
+    width: 100%;
+}
+
+.navbar-show {
+    background-color: rgb(15, 15, 15);
 }
