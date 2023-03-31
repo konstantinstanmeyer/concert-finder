@@ -55,6 +55,7 @@ main {
 .home {
     display: flex;
     flex-direction: column;
+    z-index: -10;
 }
 
 .top {
@@ -308,6 +309,7 @@ p {
     display: flex;
     flex-direction: row;
     align-items: center;
+    z-index: 90;
 }
 
 .navbar-show {
@@ -318,7 +320,7 @@ p {
     filter: invert(1);
     width: 14rem;
     margin-left: 2rem;
-    transition: all 0.3s
+    transition: all 0.3s;
 }
 
 .hamburger {
@@ -343,9 +345,14 @@ p {
     background-color: white;
     transition: all 0.5s;
     opacity: 0;
+    z-index: 100;
 }
 
 .visible {
     left: 0rem;
     opacity: 1;
+}
+
+.darken {
+    filter: brightness(50%);
 }

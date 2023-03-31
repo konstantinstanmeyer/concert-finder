@@ -78,8 +78,13 @@ export default function Home() {
     }
   }
 
+  function handleVisibility(){
+    document.querySelector(".sidebar")?.classList.remove("visible")
+    document.querySelector(".home")?.classList.remove("darken")
+  }
+
   return (
-    <div onClick={() => document.querySelector(".sidebar")?.classList.remove("visible")} className="home">
+    <div onClick={() => handleVisibility()} className="home">
       <div className="top">
         <Head>
           <title>LiveScene</title>
