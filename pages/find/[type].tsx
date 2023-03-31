@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { AppDispatch, store } from "@/redux/store"
 import { useDispatch } from "react-redux"
-import resultsSlice, { rehydrate, findResults } from "@/redux/slices/results/resultsSlice"    
+import resultsSlice, { rehydrate, findResults } from "@/redux/slices/results/resultsSlice"  
+import ConcertCard from "@/components/ConcertCard"  
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import { useRouter } from "next/router"
 
@@ -80,6 +81,7 @@ export default function FindConcerts(props: InferGetServerSidePropsType<typeof g
     return(
         <div className="find">
             {type}
+            <ConcertCard />
             <p>hello</p>
         </div>
     )

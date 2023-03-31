@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ZipcodeResponse, CityResponse, SearchParams } from "./types";
 import reduceParams from "@/util/reduceParams";
-import isArtist from "@/util/isArtist"
 import isNumeric from "@/util/isNumeric";
 import { RootState } from "../../store";
 import axios from "axios";
@@ -91,7 +90,7 @@ const resultsSlice = createSlice({
             })
             .addCase(findResults.fulfilled, (state, action: any) => {
                 const { data, type, search } = action.payload;
-                console.log("type: " + type)
+                // console.log("type: " + type)
                 switch(type){
                     case "events":
                         if (data?._embedded?.events){

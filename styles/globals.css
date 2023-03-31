@@ -205,6 +205,7 @@ p {
     min-width: 100vw;
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .search-row {
@@ -296,4 +297,10 @@ p {
     color: black;
     font-weight: bold;
     font-family: 'Mukta';
+}
+
+.concert-card {
+    height: 10rem;
+    width: 60%;
+    background-color: red;
 }
