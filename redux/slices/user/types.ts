@@ -1,9 +1,10 @@
 export interface Event {
     name: string;
-    artist: {
+    id: string;
+    artists: Array<{
         name: string;
         id: string;
-    };
+    }> | null;
     startingPrice: number;
     date: string;
     location: string;
