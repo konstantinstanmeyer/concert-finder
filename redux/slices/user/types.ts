@@ -14,4 +14,5 @@ export interface Event {
 export interface UserState {
     location: string;
     featured: Array<Event>;
+    status: string;
 }

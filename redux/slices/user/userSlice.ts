@@ -6,6 +6,7 @@ import { UserState } from "./types";
 const initialState: UserState = {
     location: "",
     featured: [],
+    status: "idle"
 }
 
 export const getFeaturedEvents = createAsyncThunk('user/getFeaturedEvents', async(location?: string) => {
@@ -20,7 +21,17 @@ const userSlice = createSlice({
 
     },
     extraReducers(builder){
+        builder
+            .addCase(getFeaturedEvents.pending, (state, action: any) => {
 
+            })
+            .addCase(getFeaturedEvents.fulfilled, (state, action: any) => {
+                state.featured = action.payload;
+                state.status = "success";
+            })
+            .addCase(getFeaturedEvents.rejected, (state, action: any) => {
+                
+            })
     }
 })
 

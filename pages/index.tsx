@@ -3,6 +3,7 @@ import { setHasVisited, validateLocation } from '@/redux/slices/results/resultsS
 import { useAppSelector, AppDispatch } from '@/redux/store'
 import { useRouter } from 'next/router'
 import { getCity, getStatus, getStateAbbr, getHasVisited } from '@/redux/slices/results/resultsSlice'
+import { getFeatured, getFeaturedEvents } from '@/redux/slices/user/userSlice'
 import { useRef, useState } from 'react'
 import Spinner from '@/components/Spinner'
 import { useSession } from 'next-auth/react'
@@ -20,10 +21,19 @@ export default function Home() {
   const cityStatus = useAppSelector(getStatus);
   const stateAbbr = useAppSelector(getStateAbbr);
   const hasVisited = useAppSelector(getHasVisited);
+  const featured = useAppSelector(getFeatured);
   const dispatch = useDispatch<AppDispatch>();
   const didType = useRef(false);
   const router = useRouter();
   let controller = new AbortController;
+
+  useEffect(() => {
+    if(featured.length === 0){
+      dispatch(getFeaturedEvents());
+    } else {
+      console.log(featured);
+    }
+  }, [featured])
 
   useEffect(() => {
     setTimeout(function() {

@@ -9,7 +9,7 @@ interface Image {
     height: number;
 }
 
-export default async function zipcode(req: NextApiRequest, res: NextApiResponse){
+export default async function featured(req: NextApiRequest, res: NextApiResponse){
     // grab the cityName from request query params, handle space in url: e.g. "cityName stateCode"
     const location = req.query.location as string;
     const [city, stateCode] = location?.split(' ') || [];
