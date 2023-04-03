@@ -92,15 +92,18 @@ export default function Home() {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
         {hasVisited ? null : <Spinner />}
-        <Link className="browse-container" href="/find">
-          <p className="browse">browse all</p>
-        </Link>
-        <div className="search-box">
-          <input placeholder="search by zipcode or city..." className="location" type="text" value={location as string} onChange={(e) => handleLocationChange(e.target.value)} />
-          <Link href={cityStatus === "success" ? `/find/concerts?location=${city}%20${stateAbbr}` : location.length === 0 ? "/find" : {}} className="search-button">
-            <p className="find-shows">Find Shows</p>
+        <div className="home-search">
+          <p className="catchphrase">Your Guide&nbsp; to Live Music</p>
+          <div className="search-box">
+            <input placeholder="search by zipcode or city..." className="location" type="text" value={location as string} onChange={(e) => handleLocationChange(e.target.value)} />
+            <Link href={cityStatus === "success" ? `/find/concerts?location=${city}%20${stateAbbr}` : location.length === 0 ? "/find" : {}} className="search-button">
+              <p className="find-shows">Find Shows</p>
+            </Link>
+            <p className="message-home">{message}</p>
+          </div>
+          <Link className="browse" href="/find">
+            browse all
           </Link>
-          <p className="message-home">{message}</p>
         </div>
       </div>
       <p>aisuhd</p>

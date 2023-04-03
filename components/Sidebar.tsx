@@ -5,20 +5,19 @@ interface Props {
 }
 
 export default function Sidebar({ isUser }: Props){
+
     return(
         <div className="sidebar">
+
             {isUser ? 
             <>
-                <Link href="/signup">
+                <Link className="auth signup" href="/signup">
                     Signup
                 </Link>
-                <Link href="/login">
+                <Link className="auth login" href="/login">
                     Login
                 </Link>
             </>: null}
-            <Link href="/signup">
-
-            </Link>
         </div>
     )
 }

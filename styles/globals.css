@@ -23,7 +23,6 @@ body {
 .search-box{
     width: 32rem;
     height: 5rem;
-    margin-left: auto;
     margin-right: auto;
     display: flex;
     flex-direction: row;
@@ -36,7 +35,7 @@ body {
     height: 1rem;
     padding-top:1.4rem;
     padding-bottom:1.4rem;
-    border-radius: 9999px;
+    border-radius: 2px;
     border: none;
     width:93%;
     color: rgb(248, 109, 132);
@@ -81,7 +80,7 @@ textarea:focus, input:focus{
 .search-button {
     width: 9rem;
     right: 1.2rem;
-    border-radius: 9999px;
+    border-radius: 2px;
     padding:0;
     background-color: rgb(248, 109, 132);
     display: flex;
@@ -93,6 +92,9 @@ textarea:focus, input:focus{
     align-items: center;
     transition: 0.3s;
     text-decoration: none;
+    margin-left: 0.5rem;
+    padding-top: .4rem;
+    padding-bottom: .4rem;
 }
 
 ::placeholder {
@@ -271,7 +273,7 @@ p {
     margin-left: 2rem;
 }
 
-.browse-container {
+.browse {
     background-color: white;
     border-radius: 3px;
     padding-top: 10px;
@@ -282,12 +284,8 @@ p {
     margin-top: 2rem;
     margin-bottom: 2rem;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-}
-
-.browse {
-    color: black;
-    font-weight: bold;
     font-family: 'Mukta';
+    width: 32rem;
 }
 
 .concert-card {
@@ -355,4 +353,18 @@ p {
 
 .darken {
     filter: brightness(50%);
+}
+
+.home-search {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-left: 6rem;
+}
+
+.catchphrase {
+    font-weight: bold;
+    font-size: 2.5rem;
+    font-family: 'Delicious Handrawn';
+    color: white;
 }

@@ -7,6 +7,7 @@ export default function Document() {
         <link rel="icon" href="/concert.png" />
         <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@600&display=swap" rel="stylesheet"></link>
         <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@700&display=swap" rel="stylesheet"></link>
+        <link href="https://fonts.googleapis.com/css2?family=Delicious+Handrawn&display=swap" rel="stylesheet"></link>
       </Head>
       <body>
         <Main />

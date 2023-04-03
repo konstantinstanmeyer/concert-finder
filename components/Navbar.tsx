@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 
 interface Props {
     isUser: boolean;
+    session: any;
 }
 
-export default function Navbar({ isUser }: Props){
+export default function Navbar({ isUser, session }: Props){
     const [scrollY, setScrollY] = useState<any>(0);
     let sidebar: HTMLElement | undefined;
     let body: HTMLElement | undefined;
@@ -35,7 +36,8 @@ export default function Navbar({ isUser }: Props){
         <div className={`navbar ${scrollY !== 0 ? "navbar-show" : ""}`}>
             <img onClick={() => handleClick()} className={`hamburger ${scrollY !== 0 ? "black" : ""}`} src="/hamburger.png" />
             <img className={`logo ${scrollY !== 0 ? "black" : ""}`} src="/live-scene.png" />
-            <h1 className="name"></h1>
+            <h1 className="name">{session.user.name.split(' ')[0]}</h1>
+
         </div>
     )
 }
