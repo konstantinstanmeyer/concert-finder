@@ -1,10 +1,12 @@
+import { Session } from "next-auth";
 import Link from "next/link";
 
 interface Props {
     isUser: boolean;
+    session: Session | null;
 }
 
-export default function Sidebar({ isUser }: Props){
+export default function Sidebar({ isUser, session }: Props){
 
     return(
         <div className="sidebar">

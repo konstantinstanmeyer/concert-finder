@@ -1,14 +1,15 @@
+import { Session } from "next-auth";
 import { useEffect, useState } from "react";
 
 interface Props {
     isUser: boolean;
-    session: any;
+    session: Session | null;
 }
 
 export default function Navbar({ isUser, session }: Props){
     const [scrollY, setScrollY] = useState<any>(0);
-    let sidebar: HTMLElement | undefined;
-    let body: HTMLElement | undefined;
+    let sidebar: HTMLElement;
+    let body: HTMLElement;
 
     useEffect(() => {
         sidebar = document.querySelector(".sidebar") as HTMLElement;
@@ -28,16 +29,16 @@ export default function Navbar({ isUser, session }: Props){
     });
 
     function handleClick(){
-        sidebar?.classList.add("visible");
-        body?.classList.add("darken");
+        sidebar.classList.add("visible");
+        body.classList.add("darken");
     }
 
     return(
         <div className={`navbar ${scrollY !== 0 ? "navbar-show" : ""}`}>
             <img onClick={() => handleClick()} className={`hamburger ${scrollY !== 0 ? "black" : ""}`} src="/hamburger.png" />
             <img className={`logo ${scrollY !== 0 ? "black" : ""}`} src="/live-scene.png" />
-            <h1 className="name">{session.user.name.split(' ')[0]}</h1>
-
+            <h1 className="name">{session ? "Hello, " + session?.user?.name?.split(' ')[0] : ""}</h1>
+            
         </div>
     )
 }

@@ -106,7 +106,18 @@ export default function Home() {
           </Link>
         </div>
       </div>
-      <p>aisuhd</p>
+      <div className="featured">
+        <h2 className="">Featured Events</h2>
+        <div>
+          <img />
+        </div>
+        <div>
+          <img />
+        </div>
+        <div>
+          <img />
+        </div>
+      </div>
     </div>
   )
 }
