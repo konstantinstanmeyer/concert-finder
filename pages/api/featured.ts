@@ -15,7 +15,7 @@ export default async function featured(req: NextApiRequest, res: NextApiResponse
     const [city, stateCode] = location?.split(' ') || [];
     const response = await axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?${city ? `city=${city}&` : ""}${stateCode ? `stateCode=${stateCode}&` : ""}classificationName=Music&sort=random&page=${Math.floor(Math.random() * 20)}&size=3&countryCode=US&apikey=${process.env.API_KEY}`)
     if(response.data?._embedded?.events){
-        console.log(response.data?._embedded?.events);
+        // console.log(response.data?._embedded?.events);
         const data = response.data._embedded.events.map((event: any): Event => {
             return {
                 name: event.name,

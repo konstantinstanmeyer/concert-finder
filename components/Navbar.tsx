@@ -17,7 +17,6 @@ export default function Navbar({ isUser, session }: Props){
 
         const handleScroll = () => {
             setScrollY(window.scrollY);
-            console.log(scrollY);
         };
 
         handleScroll();
@@ -29,7 +28,7 @@ export default function Navbar({ isUser, session }: Props){
     });
 
     function handleClick(){
-        sidebar.classList.add("visible");
+        sidebar.classList.toggle("visible");
         body.classList.add("darken");
     }
 
@@ -38,7 +37,7 @@ export default function Navbar({ isUser, session }: Props){
             <img onClick={() => handleClick()} className={`hamburger ${scrollY !== 0 ? "black" : ""}`} src="/hamburger.png" />
             <img className={`logo ${scrollY !== 0 ? "black" : ""}`} src="/live-scene.png" />
             <h1 className="name">{session ? "Hello, " + session?.user?.name?.split(' ')[0] : ""}</h1>
-            
+
         </div>
     )
 }

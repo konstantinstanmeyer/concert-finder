@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { setHasVisited, validateLocation } from '@/redux/slices/results/resultsSlice'
 import { useAppSelector, AppDispatch } from '@/redux/store'
+import Navbar from '@/components/Navbar'
 import { useRouter } from 'next/router'
 import { getCity, getStatus, getStateAbbr, getHasVisited } from '@/redux/slices/results/resultsSlice'
 import { getFeatured, getFeaturedEvents } from '@/redux/slices/user/userSlice'
@@ -89,12 +90,13 @@ export default function Home() {
   }
 
   function handleVisibility(){
-    document.querySelector(".sidebar")?.classList.remove("visible")
-    document.querySelector(".home")?.classList.remove("darken")
+    // document.querySelector(".sidebar")?.classList.remove("visible")
+    // document.querySelector(".home")?.classList.remove("darken")
   }
 
   return (
     <div onClick={() => handleVisibility()} className="home">
+      <Navbar session={session} isUser={status === "authenticated"}  />
       <div className="top">
         <Head>
           <title>LiveScene</title>
@@ -105,6 +107,7 @@ export default function Home() {
         <div className="home-search">
           <p className="catchphrase">Your Guide&nbsp; to Live Music</p>
           <div className="search-box">
+            <img src="/pin.png" className="pin" />
             <input placeholder="search by zipcode or city..." className="location" type="text" value={location as string} onChange={(e) => handleLocationChange(e.target.value)} />
             <Link href={cityStatus === "success" ? `/find/concerts?location=${city}%20${stateAbbr}` : location.length === 0 ? "/find" : {}} className="search-button">
               <p className="find-shows">Find Shows</p>
@@ -112,7 +115,7 @@ export default function Home() {
             <p className="message-home">{message}</p>
           </div>
           <Link className="browse" href="/find">
-            browse all
+            browse all events
           </Link>
         </div>
       </div>
