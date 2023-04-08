@@ -6,11 +6,13 @@ interface Props {
     session: Session | null;
 }
 
+// displays basic information and brand logo, including handling for sidebar navigation(hamburger)
 export default function Navbar({ isUser, session }: Props){
     const [scrollY, setScrollY] = useState<any>(0);
     let sidebar: HTMLElement;
     let body: HTMLElement;
 
+    // initialize scroll event listener for the home page / grab elements after DOMContentLoaded
     useEffect(() => {
         sidebar = document.querySelector(".sidebar") as HTMLElement;
         body = document.querySelector(".home") as HTMLElement;
