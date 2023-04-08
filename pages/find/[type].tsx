@@ -19,9 +19,10 @@ export const getServerSideProps:GetServerSideProps = async(ctx) => {
 
     switch(type){
         case "concerts":
+            const wordArr = location ? (location as string)?.split(' ') : null;
             await store.dispatch(findResults({
-                ...(location && { city: (location as string).split(' ')[0]}),
-                ...(location && { stateCode: (location as string).split(' ')[1]}),
+                ...(wordArr && { city: wordArr.slice(0,wordArr.length - 1).join(' ')}),
+                ...(wordArr && { stateCode: wordArr[wordArr.length - 1]}),
                 type: "events"
             }))
             results = store.getState().results.results;

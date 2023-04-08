@@ -90,13 +90,14 @@ export default function Home() {
   }
 
   function handleVisibility(){
-    // document.querySelector(".sidebar")?.classList.remove("visible")
-    // document.querySelector(".home")?.classList.remove("darken")
+    document.querySelector(".sidebar")?.classList.remove("visible")
+    document.querySelector(".home")?.classList.remove("darken")
   }
 
   return (
+    <>
+    <Navbar session={session} isUser={status === "authenticated"}  />
     <div onClick={() => handleVisibility()} className="home">
-      <Navbar session={session} isUser={status === "authenticated"}  />
       <div className="top">
         <Head>
           <title>LiveScene</title>
@@ -132,5 +133,6 @@ export default function Home() {
         </div>
       </div>
     </div>
+    </>
   )
 }
