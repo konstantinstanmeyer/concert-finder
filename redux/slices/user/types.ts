@@ -16,3 +16,8 @@ export interface UserState {
     featured: Array<Event>;
     status: string;
 }
+
+export interface FeaturedEventParams{
+    location?: string;
+    page?: number;
+}

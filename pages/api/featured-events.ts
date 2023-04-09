@@ -9,11 +9,16 @@ interface Image {
     height: number;
 }
 
+interface QueryParams {
+    location: string,
+    page: string
+}
+
 export default async function featured(req: NextApiRequest, res: NextApiResponse){
     // grab the cityName from request query params, handle space in url: e.g. "cityName stateCode"
-    const location = req.query.location as string;
+    const { location, page = 1 } = req.query as unknown as QueryParams;
     const [city, stateCode] = location?.split(' ') || [];
-    const response = await axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?${city ? `city=${city}&` : ""}${stateCode ? `stateCode=${stateCode}&` : ""}classificationName=Music&sort=random&page=${Math.floor(Math.random() * 20)}&size=3&countryCode=US&apikey=${process.env.API_KEY}`)
+    const response = await axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?${city ? `city=${city}&` : ""}${stateCode ? `stateCode=${stateCode}&` : ""}classificationName=Music&sort=random&page=${page}&size=3&countryCode=US&apikey=${process.env.API_KEY}`)
     if(response.data?._embedded?.events){
         // console.log(response.data?._embedded?.events);
         const data = response.data._embedded.events.map((event: any): Event => {

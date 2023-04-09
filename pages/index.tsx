@@ -1,10 +1,11 @@
 import Head from 'next/head'
+import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import { setHasVisited, validateLocation } from '@/redux/slices/results/resultsSlice'
-import { useAppSelector, AppDispatch } from '@/redux/store'
+import { useAppSelector, AppDispatch, store } from '@/redux/store'
 import Navbar from '@/components/Navbar'
 import { useRouter } from 'next/router'
 import { getCity, getStatus, getStateAbbr, getHasVisited } from '@/redux/slices/results/resultsSlice'
-import { getFeatured, getFeaturedEvents } from '@/redux/slices/user/userSlice'
+import { getFeatured, getFeaturedEvents, rehydrateFeatured } from '@/redux/slices/user/userSlice'
 import { useRef, useState } from 'react'
 import Spinner from '@/components/Spinner'
 import { useSession } from 'next-auth/react'
@@ -13,7 +14,7 @@ import { useDispatch } from 'react-redux'
 import Link from 'next/link'
 import isNumeric from '@/util/isNumeric'
 
-export default function Home() {
+export default function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { data: session, status } = useSession();
   const [location, setLocation] = useState<String>("");
   const [message, setMessage] = useState<String | undefined>("");
@@ -22,17 +23,19 @@ export default function Home() {
   const cityStatus = useAppSelector(getStatus);
   const stateAbbr = useAppSelector(getStateAbbr);
   const hasVisited = useAppSelector(getHasVisited);
-  const featured = useAppSelector(getFeatured);
+  const { featured } = props;
   const dispatch = useDispatch<AppDispatch>();
   const didType = useRef(false);
   const router = useRouter();
   let controller = new AbortController;
 
+  console.log(props);
+
   useEffect(() => {
     if(featured.length === 0){
-      dispatch(getFeaturedEvents());
+      dispatch(rehydrateFeatured(props));
     } else {
-      console.log(featured);
+      // console.log(featured);
     }
   }, [featured])
 
@@ -135,4 +138,17 @@ export default function Home() {
     </div>
     </>
   )
+}
+
+export const getServerSideProps:GetServerSideProps = async(ctx) => {
+  await store.dispatch(getFeaturedEvents({
+    page: 1
+  }));
+  const events = store.getState().user.featured;
+
+  return {
+    props: {
+      featured: events
+    }
+  }
 }
