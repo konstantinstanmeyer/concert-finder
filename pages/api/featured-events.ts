@@ -34,7 +34,7 @@ export default async function featured(req: NextApiRequest, res: NextApiResponse
                 image: event.images.find(isImage).url,
                 startingPrice: event?.priceRanges ? event?.priceRanges[0].min : "na",
                 date: event.dates.start.localDate,
-                location: event._embedded.venues[0].city.name + " " + event._embedded.venues[0].state.stateCode
+                location: event._embedded.venues[0].city.name + ", " + event._embedded.venues[0].state.stateCode
             }
         })
         res.status(200).json(data)
