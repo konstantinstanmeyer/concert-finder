@@ -135,6 +135,7 @@ export default function Home(props: InferGetServerSidePropsType<typeof getServer
           </div>
         </div>
         <div className="line" />
+        <h3 className="about-name">About LiveScene</h3>
         {blurb}
       </div>
     </>

@@ -459,6 +459,10 @@ p {
     font-family: 'Mukta';
     font-size: 18px;
     width: 70%;
+    color: rgb(105, 105, 105);
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5rem;
 }
 
 .line {
@@ -468,4 +472,16 @@ p {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 4rem;
+}
+
+.white {
+    filter: invert(1);
+}
+
+.about-name {
+    font-family: 'Outfit';
+    font-size: 22px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
 }
