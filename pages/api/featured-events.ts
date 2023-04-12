@@ -1,6 +1,7 @@
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Event } from "@/redux/slices/user/types"
+import stringToNumber from "@/util/stringToNumber"
 
 interface Image {
     ratio: string;
@@ -25,19 +26,21 @@ export default async function featured(req: NextApiRequest, res: NextApiResponse
             return {
                 name: event.name,
                 id: event.id,
-                artists: event._embedded?.attractions.map((attraction: any) => {
+                artists: event._embedded?.attractions?.map((attraction: any) => {
                     return {
                         name: attraction.name,
                         id: attraction.id,
                     }
                 }),
                 image: event.images.find(isImage).url,
-                startingPrice: event?.priceRanges ? event?.priceRanges[0].min : "na",
+                startingPrice: event?.priceRanges ? event?.priceRanges[0].min : stringToNumber(event.id),
                 date: event.dates.start.localDate,
                 location: event._embedded.venues[0].city.name + ", " + event._embedded.venues[0].state.stateCode
             }
         })
-        res.status(200).json(data)
+        res.status(200).json(data);
+    } else {
+        res.status(404).json({ message: "API-Failure" });
     }
 }
 

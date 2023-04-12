@@ -39,7 +39,8 @@ export default function Navbar({ isUser, session }: Props){
     return(
         <div className={`navbar ${scrollY !== 0 ? "navbar-show" : ""}`}>
             <img onClick={() => handleClick()} className={`hamburger ${scrollY !== 0 ? "black" : ""}`} src="/hamburger.png" />
-            <img className={`logo ${scrollY !== 0 ? "black" : ""}`} src="/live-scene.png" />
+            <img className={`logo ${scrollY !== 0 ? "black" : ""}`} src="/LiveScene.png" />
+            {/* <p className="livescene">LIVE<span className="scene">Scene</span></p> */}
             <h1 className={`name ${scrollY !== 0 ? "" : "white"}`}>{session ? "Hello, " + session?.user?.name?.split(' ')[0] : ""}</h1>
 
         </div>

@@ -485,3 +485,13 @@ p {
     margin-left: auto;
     margin-right: auto;
 }
+
+.livescene {
+    font-family: 'Bebas Neue';
+    color: red;
+    font-size: 3rem;
+}
+
+.scene {
+    color: black;
+}
