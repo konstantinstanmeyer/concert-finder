@@ -95,15 +95,10 @@ export default function Home(props: InferGetServerSidePropsType<typeof getServer
     }
   }
 
-  function handleVisibility(){
-    document.querySelector(".sidebar")?.classList.remove("visible")
-    document.querySelector(".home")?.classList.remove("darken")
-  }
-
   return (
     <>
       <Navbar session={session} isUser={status === "authenticated"}  />
-      <div onClick={() => handleVisibility()} className="home">
+      <div className="home">
         <div className="top">
           <Head>
             <title>LiveScene</title>
@@ -112,14 +107,16 @@ export default function Home(props: InferGetServerSidePropsType<typeof getServer
           </Head>
           {hasVisited ? null : <Spinner />}
           <div className="home-search">
-            <p className="catchphrase">Your Guide&nbsp; to Live Music</p>
+            <p className="catchphrase">Your Guide to Live Music</p>
             <div className="search-box">
-              <img src="/pin.png" className="pin" />
-              <input placeholder="search by zipcode or city..." className="location" type="text" value={location as string} onChange={(e) => handleLocationChange(e.target.value)} />
+              <div className="location-input">
+                <img src="/pin.png" className="pin" />
+                <input placeholder="search by zipcode or city..." className="location" type="text" value={location as string} onChange={(e) => handleLocationChange(e.target.value)} />
+                <p className="message-home">{message ? `(${message})` : null}</p>
+              </div>
               <Link href={cityStatus === "success" ? `/find/concerts?location=${city}%20${stateAbbr}` : location.length === 0 ? "/find" : {}} className="search-button">
                 <p className="find-shows">Find Shows</p>
               </Link>
-              <p className="message-home">{message}</p>
             </div>
             <Link className="browse" href="/find">
               browse all events
