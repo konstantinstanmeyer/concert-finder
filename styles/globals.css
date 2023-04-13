@@ -280,7 +280,7 @@ p {
     text-underline-offset: 5px;
     color: white;
     font-family: 'Mukta';
-    width: 32rem;
+    width: fit-content;
 }
 
 .browse:hover {
@@ -346,6 +346,8 @@ p {
     transition: all 0.5s;
     opacity: 0;
     z-index: 100;
+    display: flex;
+    flex-direction: column;
 }
 
 .visible {
@@ -515,4 +517,71 @@ p {
 
 .display{
     display: block;
+}
+
+.x {
+    transform: rotate(45deg);
+    width: 50px;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    right: 1.25rem;
+    top: 0.75rem;
+    font-weight: bold;
+    font-size: 2rem;
+    background-color:rgb(202, 202, 202);
+    border-radius: 9999px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    text-indent: -5px;
+    transition: 0.3s all;
+}
+
+.x:hover{
+    cursor: pointer;
+    background-color: rgb(163, 163, 163);
+}
+
+.google-signup {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-left: 1rem;
+}
+
+.auth {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 4rem;
+    align-items: center;
+    border-radius: 10px;
+    text-decoration: none;
+    font-family: 'Outfit';
+}
+
+.signup {
+    background-color: black;
+    margin-top: 5rem;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.login {
+    background-color: lightgray;
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    color: black;
+    transition: 0.3s all;
+}
+
+.login:hover {
+    background-color: rgb(175, 175, 175)
 }

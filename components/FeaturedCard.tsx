@@ -1,5 +1,6 @@
 import { Event } from '@/redux/slices/user/types'
 import Link from 'next/link';
+import formatter from "@/util/formatter"
 
 interface FeaturedProps {
     featured: Event;
@@ -16,7 +17,7 @@ export default function FeaturedCard(props: FeaturedProps){
             </div>
             <h2>{featured?.artists ? featured.artists[0]["name"] : featured.name} <span>{featured.date}</span></h2>
             <p>{featured.location}</p>
-            {featured.startingPrice !== "na" ? <p>Starting at: ${featured.startingPrice}</p> : null}
+            <p>Starting at: {formatter.format(featured.startingPrice as number)}</p>
         </Link>
     )
 }
