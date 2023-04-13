@@ -1,4 +1,5 @@
 import { Session } from "next-auth";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 
 interface Props {
@@ -13,18 +14,20 @@ export default function Sidebar({ isUser, session }: Props){
         document.querySelector('.sidebar')?.classList.remove('visible');
     }
 
+    async function handleGoogleSignin(){
+        signIn('google', { callbackUrl: 'http://localhost:3000' })
+    }
+
     return (
         <>
             <div onClick={() => handleClick()} className="cover"/>
             <div className="sidebar">
                 <p onClick={() => handleClick()} className="x">+</p>
-                {isUser ? 
-                <>
-                    <Link className="auth signup" href="/login">
+                {!isUser ? 
+                    <button onClick={handleGoogleSignin} className="auth login">
                         Log in
                         <img className="google-signup" src="/google.png" />
-                    </Link>
-                </>: null}
+                    </button> : null}
             </div>
         </>
     )

@@ -567,21 +567,11 @@ p {
     font-family: 'Outfit';
 }
 
-.signup {
+.login {
     background-color: black;
     margin-top: 5rem;
     color: white;
     font-size: 1.5rem;
+    border: none !important;
 }
 
-.login {
-    background-color: lightgray;
-    margin-top: 1rem;
-    font-size: 1.5rem;
-    color: black;
-    transition: 0.3s all;
-}
-
-.login:hover {
-    background-color: rgb(175, 175, 175)
-}
