@@ -27,7 +27,6 @@ body-darken {
 .search-box{
     width: 45%;
     height: 5rem;
-    margin-right: auto;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -57,6 +56,7 @@ main {
     display: flex;
     flex-direction: column;
     z-index: -10;
+    width: 100vw;
 }
 
 .top {
@@ -271,8 +271,23 @@ p {
     font-size: 1.3em;
     color: black;
     font-family: 'Outfit';
+}
+
+.name-container {
+    width: fit-content;
+    height: fit-content;
     margin-left: auto;
-    margin-right: 2rem;
+    margin-right: 2.5rem;
+    position: relative;
+}
+
+.view-profile {
+    color: white;
+    font-family: 'Outfit';
+    position: absolute;
+    bottom: -14px;
+    font-size: 0.75rem;
+    right: 0;
 }
 
 .browse {
@@ -302,7 +317,7 @@ p {
 .navbar {
     position: fixed;
     height: 6rem;
-    width: 100%;
+    width: 100vw;
     transition: all 0.3s;
     display: flex;
     flex-direction: row;
@@ -348,6 +363,8 @@ p {
     z-index: 100;
     display: flex;
     flex-direction: column;
+    border-right: 1px solid gray;
+    align-items: center;
 }
 
 .visible {
@@ -363,7 +380,7 @@ p {
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-left: 6rem;
+    padding-left: 6rem;
 }
 
 .catchphrase {
@@ -508,7 +525,7 @@ p {
 
 .cover {
     background-color: rgb(0,0,0,0.5);
-    position: absolute;
+    position: fixed;
     width: 100vw;
     height: 100vh;
     z-index: 100;
@@ -575,3 +592,123 @@ p {
     border: none !important;
 }
 
+.login:hover {
+    cursor: pointer;
+}
+
+.navbar-login {
+    margin-left: auto;
+    margin-right: 2rem;
+    width: fit-content;
+    height: 3rem;
+    position: relative;
+    background-color: white;
+    border: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color: black;
+}
+
+.navbar-login {
+    cursor: pointer;
+}
+
+.google-word {
+    width: 2.2rem;;
+}
+
+.navbar-signin {
+    font-family: 'Outfit';
+    font-size: 1rem;
+    margin-left: 1rem;
+}
+
+.invert-background {
+    background-color: black;
+    color: white;
+}
+
+.sidebar-card {
+    width: 80%;
+    height: 4%;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    transition: 0.25s;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    border-radius: 4px;
+}
+
+.sidebar-card:hover {
+    background-color: rgb(236, 236, 236);
+}
+
+.profile-card {
+    height: 8%;
+    margin-top: 6rem;
+}
+
+.sidebar-image {
+    width: 2.25rem;
+    height: 2.25rem;
+    margin-left: 1rem;
+    margin-right: auto;
+}
+
+.sidebar-user {
+    width: 70%;
+    font-size: 1.25rem;
+    font-family: "Outfit";
+    line-height: 1rem;
+}
+
+.sidebar-link {
+    font-size: 0.75rem;
+    margin:0;
+    padding: 0;
+    top: -10px;
+    color: black;
+}
+
+.sidebar-icon {
+    margin-left: 1.4rem;
+    height: 90%;
+}
+
+.sidebar-text {
+    font-family: "Outfit";
+    width: 70%;
+    margin-left: auto;
+    font-size: 1rem;
+}
+
+.divider {
+    width: 80%;
+    height: 1px;
+    background-color: rgb(199, 199, 199);
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.sidebar-signout {
+    margin-top: auto;
+    margin-bottom: 2rem;
+    background-color: black;
+    color: white;
+    font-family: "Outfit";
+    width: 80%;
+    height: 4rem;
+    font-size: 1.5rem;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
