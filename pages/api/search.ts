@@ -19,13 +19,14 @@ export default async function concertSearch(req: NextApiRequest, res: NextApiRes
     } = req.query as unknown as SearchParams;
     // console.log(type)
 
-    // handles query param logic for all search routes, allows for dynamic responses using ternary expressions to display important values
+    // handle query param logic for all search routes, allow for dynamic responses using ternary expressions to display important values
     // using ticketMasters's API docs, https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/
     // three main types of responses:
     // 1) events -> returns concerts and festivals, also used to determine whether a location has upcoming concerts by passing values into the "stateCode" and "city" paramaters
     // 2) attractions -> pertains to something or someone who is doing the performance, for this use-case returning artist information, which requires a typeId and subTypeId set to TicketMaster's correlating "Musician" IDs
     // 3) venues -> query by location and keywords, returns an array of events, venue information, and minimal artist information
     const response = await axios.get(
+        // possible improvement would be to create a utility function that reduces the incoming params into a single string, then concat the string to the base url
         process.env.API_URL + type + `${id ? `/${id}` : ""}.json?${type === "artists" ? "typeId=KZAyXgnZfZ7v7la&subTypeId=KZFzBErXgnZfZ7vAd7&" : ""}${search ? `keyword=${search}&` : ""}${concertId ? `id=${concertId}&` : ""}${zipcode ? `postalCode=${zipcode}&` : ""}${city ? `city=${city}&` : ""}${stateCode ? `stateCode=${stateCode}&` : ""}${genres ? reduceGenres(genres) : ""}${type !== "attractions" ? "classificationName=Music&" : ""}page=${page}&size=${size}&sort=random&apikey=${process.env.API_KEY}`
     )
     res.status(200).json(response.data);

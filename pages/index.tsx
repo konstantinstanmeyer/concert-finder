@@ -2,12 +2,10 @@ import Head from 'next/head'
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import { setHasVisited, validateLocation } from '@/redux/slices/results/resultsSlice'
 import { useAppSelector, AppDispatch, store } from '@/redux/store'
-import Navbar from '@/components/Navbar'
 import { useRouter } from 'next/router'
 import { getCity, getStatus, getStateAbbr, getHasVisited } from '@/redux/slices/results/resultsSlice'
 import { getFeaturedEvents, rehydrateFeatured, getLocation } from '@/redux/slices/user/userSlice'
 import { useRef, useState } from 'react'
-import Spinner from '@/components/Spinner'
 import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
@@ -97,7 +95,6 @@ export default function Home(props: InferGetServerSidePropsType<typeof getServer
 
   return (
     <>
-      <Navbar session={session} isUser={status === "authenticated"}  />
       <div className="home">
         <div className="top">
           <Head>

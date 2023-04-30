@@ -1,5 +1,5 @@
 import { Session } from "next-auth";
-import { signIn } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 
 interface Props {
@@ -37,23 +37,23 @@ export default function Sidebar({ isUser, session }: Props){
                             </div>
                         </div>
                         <div className="divider" />
-                        <Link href="" className="sidebar-card">
+                        <Link href="/find" className="sidebar-card">
                             <img className="sidebar-icon" src="/glass.png" />
-                            <p className="sidebar-text">Find Concerts</p>
+                            <p className="sidebar-text">Discover</p>
                         </Link>
                         <div className="divider" />
-                        <Link href="" className="sidebar-card">
+                        <Link href="/tickets" className="sidebar-card">
                             <img className="sidebar-icon" src="/ticket.png" />
                             <p className="sidebar-text">Past Tickets</p>
                         </Link>
                         <div className="divider" />
-                        <Link href="" className="sidebar-card">
+                        <Link href="/wallet" className="sidebar-card">
                             <img className="sidebar-icon" src="/wallet.png" />
                             <p className="sidebar-text">Payment Options</p>
                         </Link>
-                        <div className="sidebar-signout">
+                        <button onClick={() => signOut()} className="sidebar-signout">
                             Sign out
-                        </div>
+                        </button>
                     </>}
             </div>
         </>

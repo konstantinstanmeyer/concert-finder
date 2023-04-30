@@ -1,15 +1,26 @@
 import { Session } from "next-auth";
 import { useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import Link from "next/link";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 
 interface Props {
-    isUser: boolean;
     session: Session | null;
 }
 
+// validate whether the user is still currently logged in for dynamic rendering
+// export const getServerSideProps:GetServerSideProps = async(ctx) => {
+//     console.log("asdiuhasd")
+//     return {
+//         props: {
+//             message:"hes"
+//         }
+//     }
+// }
+
 // displays basic information and brand logo, including handling for sidebar navigation(hamburger)
-export default function Navbar({ isUser, session }: Props){
+export default function Navbar({session}: Props){
     const [scrollY, setScrollY] = useState<any>(0);
     let sidebar: HTMLElement;
     let cover: HTMLElement;
@@ -24,9 +35,13 @@ export default function Navbar({ isUser, session }: Props){
             setScrollY(window.scrollY);
         };
 
+        // initial scroll position on first render
         handleScroll();
  
+        // initial event listener to handle all scrolls after first render
         window.addEventListener("scroll", handleScroll);
+
+        // cleanup to prevent event listeners from stacking
         return () => {
           window.removeEventListener("scroll", handleScroll);
         };

@@ -174,12 +174,12 @@ p {
 }
 
 .find-card {
-    height: 20rem;
+    height: 19rem;
     width:18rem;
-    background-color: #f8cc9c;
+    background-color: white;
     margin-left: 2rem;
     margin-right: 2rem;
-    z-index: 100;
+    z-index: 20;
     border-radius: 4px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
     margin-bottom: 4rem;
@@ -189,6 +189,7 @@ p {
     transition: scale 0.5s;
     text-decoration: none;
     color: black;
+    font-family: 'Outfit';
 }
 
 .search {
@@ -200,7 +201,7 @@ p {
     font-size: 16px;
     text-indent: 24px;
     font-weight: bold;
-    color: rgb(250, 60, 91);
+    color: black;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     font-family: 'Mukta';
     border: none;
@@ -227,11 +228,10 @@ p {
 .search-magnifier {
     width: 35px;
     height: 35px;
-    filter: invert(49%) sepia(47%) saturate(703%) hue-rotate(314deg) brightness(98%) contrast(84%);
 }
 
 .image-container {
-    background-color: rgb(252, 210, 217);
+    background-color: rgb(209, 209, 209);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -243,7 +243,7 @@ p {
 }
 
 .image-container:hover {
-    background-color: rgb(255, 135, 155);
+    background-color: rgb(170, 170, 170);
 }
 
 .find-card:hover {
@@ -263,7 +263,7 @@ p {
 }
 
 .find-card h2 {
-    font-family: 'Mukta';
+    font-family: 'Outfit';
 }
 
 .name {
@@ -644,6 +644,8 @@ p {
     text-decoration: none;
     color: black;
     border-radius: 4px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 .sidebar-card:hover {
@@ -711,4 +713,8 @@ p {
     align-items: center;
     justify-content: center;
     border-radius: 10px;
+}
+
+.sidebar-signout:hover {
+    cursor: pointer;
 }

@@ -9,6 +9,7 @@ export default function Layout({ children }: PropsWithChildren<{}>){
     return(
         <>
             <Sidebar session={session} isUser={status === "authenticated"} />
+            <Navbar session={session} />
             <main>
                 {children}
             </main>
